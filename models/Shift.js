@@ -17,7 +17,7 @@ const ShiftSchema = mongoose.Schema({
         type: Date,
         required: true,
     },
-    break: {
+    rest: {
         type: Number,
         required: true,
     },

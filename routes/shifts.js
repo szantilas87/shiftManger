@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const authOrganization = require('../middleware/authOrganization');
 const {
     check,
     validationResult
@@ -12,9 +13,11 @@ const Organization = require('../models/Organization');
 // @route   GET api/shifts
 // @desc    Get all shifts
 // @access  Private
-router.get('/', async (req, res) => {
+router.get('/', authOrganization, async (req, res) => {
     try {
-        const shifts = await Shift.find("5e0f6e51059e6a4a9cbabb7e").sort({
+        const shifts = await Shift.find({
+            organization: req.organization.id
+        }).sort({
             date: -1
         });
         res.json(shifts);
@@ -27,8 +30,36 @@ router.get('/', async (req, res) => {
 // @route   POST api/shifts
 // @desc    Add new shift
 // @access  Private
-router.post('/', (req, res) => {
-    res.send('Add shift');
+router.post('/', [authOrganization, [check('name', 'Name is required').not().isEmpty()]], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            errors: errors.array()
+        });
+    }
+
+    const {
+        name,
+        start,
+        end,
+        rest
+    } = req.body;
+
+    try {
+        const newShift = new Shift({
+            name,
+            start,
+            end,
+            rest,
+            organization: req.organization.id
+        });
+
+        const shift = await newShift.save();
+        res.json(shift);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
 });
 
 // @route   PUT api/shifts/:id
