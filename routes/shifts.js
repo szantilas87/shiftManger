@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const authOrganization = require('../middleware/authOrganization');
+const authUser = require('../middleware/authUser');
 const {
     check,
     validationResult
@@ -30,7 +31,7 @@ router.get('/', authOrganization, async (req, res) => {
 // @route   POST api/shifts
 // @desc    Add new shift
 // @access  Private
-router.post('/', [authOrganization, [check('name', 'Name is required').not().isEmpty()]], async (req, res) => {
+router.post('/', [authUser, authOrganization, [check('name', 'Name is required').not().isEmpty()]], async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({
@@ -51,7 +52,8 @@ router.post('/', [authOrganization, [check('name', 'Name is required').not().isE
             start,
             end,
             rest,
-            organization: req.organization.id
+            organization: req.organization.id,
+            user: req.user.name
         });
 
         const shift = await newShift.save();
@@ -65,14 +67,77 @@ router.post('/', [authOrganization, [check('name', 'Name is required').not().isE
 // @route   PUT api/shifts/:id
 // @desc    Update shift
 // @access  Private
-router.put('/:id', (req, res) => {
-    res.send('Update shift');
+router.put('/:id', authUser, authOrganization, async (req, res) => {
+    const {
+        name,
+        start,
+        end,
+        rest
+    } = req.body;
+
+
+    // Build contact object
+    const shiftFields = {};
+    if (name) shiftFields.name = name;
+    if (start) shiftFields.start = start;
+    if (end) shiftFields.end = end;
+    if (rest) shiftFields.rest = rest;
+
+    try {
+        let shift = await Shift.findById(req.params.id);
+
+        if (!shift) return res.status(404).json({
+            msg: 'Shift not found'
+        });
+
+        // Make sure shift is assigned to the organization 
+        if (shift.organization.toString() !== req.organization.id) {
+            return res.status(401).json({
+                msg: 'Not authorized'
+            })
+        }
+
+        shift = await Shift.findByIdAndUpdate(
+            req.params.id, {
+                $set: shiftFields
+            }, {
+                new: true
+            }
+        );
+        res.json(shift);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
 });
 
 // @route   DELETE api/shifts/:id
 // @desc    Delete shift
 // @access  Private
-router.delete('/:id', (req, res) => {
-    res.send('Delete shift');
+router.delete('/:id', authUser, authOrganization, async (req, res) => {
+    try {
+        let shift = await Shift.findById(req.params.id);
+
+        if (!shift) return res.status(404).json({
+            msg: 'Shift not found'
+        });
+
+        // Make sure user owns Shift
+        if (shift.organization.toString() !== req.organization.id) {
+            return res.status(401).json({
+                msg: 'Not authorized'
+            })
+        }
+
+        await Shift.findByIdAndRemove(req.params.id);
+
+        res.json({
+            msg: 'Shift removed'
+        });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
 });
+
 module.exports = router;
