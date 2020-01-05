@@ -1,11 +1,27 @@
 const express = require('express');
 const router = express.Router();
+const {
+    check,
+    validationResult
+} = require('express-validator');
+
+const Shift = require('../models/Shift');
+const Organization = require('../models/Organization');
+
 
 // @route   GET api/shifts
 // @desc    Get all shifts
 // @access  Private
-router.get('/', (req, res) => {
-    res.send('Get all shifts');
+router.get('/', async (req, res) => {
+    try {
+        const shifts = await Shift.find("5e0f6e51059e6a4a9cbabb7e").sort({
+            date: -1
+        });
+        res.json(shifts);
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send('Server Error');
+    }
 });
 
 // @route   POST api/shifts
