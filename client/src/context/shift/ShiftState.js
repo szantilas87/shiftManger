@@ -3,7 +3,7 @@ import uuid from 'uuid';
 import shiftReducer from './shiftReducer';
 import ShiftContext from './shiftContext';
 import {
-  ADD_ORGANIZATION,
+  ADD_SHIFT,
   DELETE_ORGANIZATION,
   SET_CURRENT,
   CLEAR_CURRENT,
@@ -44,6 +44,15 @@ const ShiftState = props => {
 
   const [state, dispatch] = useReducer(shiftReducer, initialState);
 
+  // Add Shift
+  const addShift = shift => {
+    shift.id = uuid.v4();
+    dispatch({
+      type: ADD_SHIFT,
+      payload: shift
+    });
+  };
+
   // Delete Organization
 
   // Set Current Organization
@@ -59,7 +68,8 @@ const ShiftState = props => {
   return (
     <ShiftContext.Provider
       value={{
-        shifts: state.shifts
+        shifts: state.shifts,
+        addShift
       }}
     >
       {' '}

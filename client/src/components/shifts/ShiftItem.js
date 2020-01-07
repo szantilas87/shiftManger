@@ -6,14 +6,11 @@ const ShiftItem = ({ shift }) => {
   return (
     <div className='card bg-light'>
       <ul>
-        <li>{name}</li>
-        <li>{start}</li>
-        <li>{end}</li>
-        <li>{rest}</li>
-        <li>{user}</li>
-      </ul>
-      <button className='btn btn-dark btn-sm'>Edit</button>
-      <button className='btn btn-danger btn-sm'>Delete</button>
+        <li> {name} </li> <li> {user} </li> <li> {start} </li> <li> {end} </li>{' '}
+        <li> {rest} </li>{' '}
+      </ul>{' '}
+      <button className='btn btn-dark btn-sm'> Edit </button>{' '}
+      <button className='btn btn-danger btn-sm'> Delete </button>{' '}
     </div>
   );
 };
