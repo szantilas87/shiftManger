@@ -6,16 +6,19 @@ const Navbar = ({ title, icon }) => {
   return (
     <div className='navbar bg-primary'>
       <h1>
-        <i className={icon}></i> {title}
-      </h1>
+        <i className={icon}> </i> {title}{' '}
+      </h1>{' '}
       <ul>
         <li>
-          <Link to='/'>Home</Link>
-        </li>
+          <Link to='/'> Home </Link>{' '}
+        </li>{' '}
         <li>
-          <Link to='/about'>About</Link>
-        </li>
-      </ul>
+          <Link to='/about'> About </Link>{' '}
+        </li>{' '}
+        <li>
+          <Link to='/shifts'> Shifts </Link>{' '}
+        </li>{' '}
+      </ul>{' '}
     </div>
   );
 };
