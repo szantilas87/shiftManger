@@ -35,8 +35,6 @@ const OrganizationState = props => {
 
   const [state, dispatch] = useReducer(organizationReducer, initialState);
 
-  // Add Organization
-
   // Delete Organization
 
   // Set Current Organization
@@ -52,7 +50,7 @@ const OrganizationState = props => {
   return (
     <OrganizationContext.Provider
       value={{
-        contacts: state.contacts
+        organizations: state.organizations
       }}
     >
       {props.children}{' '}
