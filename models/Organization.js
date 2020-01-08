@@ -8,6 +8,7 @@ const OrganizationSchema = mongoose.Schema({
     rate: {
         type: Number,
         required: true,
+        min: 1
     },
     date: {
         type: Date,

@@ -12,7 +12,10 @@ const OrganizationForm = () => {
   const { name, rate } = organization;
 
   const onChange = e =>
-    setOrganization({ ...organization, [e.target.name]: e.target.value });
+    setOrganization({
+      ...organization,
+      [e.target.name]: e.target.value
+    });
 
   const onSubmit = e => {
     e.preventDefault();
@@ -25,20 +28,21 @@ const OrganizationForm = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <h2 className='text-primary'>Add Contact</h2>
+      <h2 className='text-primary'> Add Contact </h2>{' '}
       <input
         type='text'
         name='name'
         placeholder='Name'
         value={name}
         onChange={onChange}
-      />
+      />{' '}
       <input
         type='number'
         name='rate'
         placeholder='Hourly Rate'
         value={rate}
         onChange={onChange}
+        min='1'
       />
       <div>
         <input
@@ -46,7 +50,7 @@ const OrganizationForm = () => {
           value='Add Organization'
           className='btn btn-primary btn-block'
         />
-      </div>
+      </div>{' '}
     </form>
   );
 };

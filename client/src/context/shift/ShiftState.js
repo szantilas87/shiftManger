@@ -19,25 +19,25 @@ const ShiftState = props => {
         id: 1,
         user: 'aa bb',
         name: 'shift1',
-        start: '2020-01-09',
-        end: '2020-01-10',
-        rest: 40
+        startTime: '11:00',
+        endTime: '13:00',
+        rest: '00:30'
       },
       {
         id: 2,
         user: 'cc dd',
         name: 'shift3',
-        start: '2020-01-09',
-        end: '2020-01-10',
-        rest: 30
+        startTime: '10:34',
+        endTime: '12:45',
+        rest: '00:30'
       },
       {
         id: 3,
         user: 'ee ff',
         name: 'shift4',
-        start: '2020-01-09',
-        end: '2020-01-10',
-        rest: 20
+        startTime: '01:54',
+        endTime: '12:45',
+        rest: '00:20'
       }
     ]
   };

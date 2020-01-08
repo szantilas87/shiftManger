@@ -6,17 +6,24 @@ const OrganizationItem = ({ organization }) => {
   return (
     <div className='card bg-light'>
       <h3 className='text-left'>
+        {' '}
         {name}{' '}
-        <span style={{ float: 'right' }} className={'badge badge-success'}>
-          <i className='fas fa-dollar-sign'></i>
-          {rate}
-        </span>
-      </h3>
+        <span
+          style={{
+            float: 'right'
+          }}
+          className={'badge badge-success'}
+        >
+          <i className='fas fa-dollar-sign'> </i> {rate}{' '}
+        </span>{' '}
+      </h3>{' '}
+      <br />
       <br />
       <p>
-        <button className='btn btn-dark btn-sm'>Edit</button>
-        <button className='btn btn-danger btn-sm'>Delete</button>
-      </p>
+        <button className='btn btn-success'> Join </button>{' '}
+        <button className='btn btn-dark '> Edit </button>{' '}
+        <button className='btn btn-danger'> Delete </button>{' '}
+      </p>{' '}
     </div>
   );
 };

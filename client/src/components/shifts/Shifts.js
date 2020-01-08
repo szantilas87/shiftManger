@@ -7,10 +7,21 @@ const Shifts = () => {
   const { shifts } = shiftContext;
   return (
     <Fragment>
-      {' '}
-      {shifts.map(shift => (
-        <ShiftItem key={shift.id} shift={shift} />
-      ))}{' '}
+      <table className='shifts'>
+        <tr>
+          <th>Employee name</th>
+          <th>Shift date</th>
+          <th>Start time</th>
+          <th>Finish time</th>
+          <th>Break</th>
+          <th>Worked Hours</th>
+          <th>Shift Cost</th>
+          <th>Edit / Delete</th>
+        </tr>
+        {shifts.map(shift => (
+          <ShiftItem key={shift.id} shift={shift} />
+        ))}{' '}
+      </table>
     </Fragment>
   );
 };

@@ -58,7 +58,8 @@ router.post('/', [check('name', 'Please add name')
 
         const payload = {
             organization: {
-                id: organization.id
+                id: organization.id,
+                rate: organization.rate
             }
         };
 

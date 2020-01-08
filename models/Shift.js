@@ -13,17 +13,26 @@ const ShiftSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    start: {
+    startDate: {
         type: Date,
         required: true,
     },
-    end: {
-        type: Date,
+    startTime: {
+        type: String,
+        required: true,
+    },
+    endTime: {
+        type: String,
         required: true,
     },
     rest: {
         type: Number,
         required: true,
+    },
+    rate: {
+        type: Number,
+        required: true,
+        min: 1
     },
     date: {
         type: Date,

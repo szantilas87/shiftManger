@@ -5,12 +5,16 @@ import ShiftForm from '../shifts/ShiftForm';
 const ShiftsView = () => {
   return (
     <div>
+      <br />
+      <br />
       <div>
         <Shifts />
-      </div>
+      </div>{' '}
+      <br />
+      <br />
       <div>
         <ShiftForm />
-      </div>
+      </div>{' '}
     </div>
   );
 };

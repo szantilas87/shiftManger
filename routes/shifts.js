@@ -41,19 +41,22 @@ router.post('/', [authUser, authOrganization, [check('name', 'Name is required')
 
     const {
         name,
-        start,
-        end,
+        startDate,
+        startTime,
+        endTime,
         rest
     } = req.body;
 
     try {
         const newShift = new Shift({
             name,
-            start,
-            end,
+            startDate,
+            startTime,
+            endTime,
             rest,
             organization: req.organization.id,
-            user: req.user.name
+            user: req.user.name,
+            rate: req.organization.rate,
         });
 
         const shift = await newShift.save();
@@ -70,17 +73,18 @@ router.post('/', [authUser, authOrganization, [check('name', 'Name is required')
 router.put('/:id', authUser, authOrganization, async (req, res) => {
     const {
         name,
-        start,
-        end,
-        rest
+        startDate,
+        startTime,
+        endTime,
     } = req.body;
 
 
     // Build contact object
     const shiftFields = {};
     if (name) shiftFields.name = name;
-    if (start) shiftFields.start = start;
-    if (end) shiftFields.end = end;
+    if (startDate) shiftFields.start = startDate;
+    if (startTime) shiftFields.start = startTime;
+    if (endTime) shiftFields.end = endTime;
     if (rest) shiftFields.rest = rest;
 
     try {

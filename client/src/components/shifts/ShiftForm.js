@@ -7,12 +7,13 @@ const ShiftForm = () => {
   const [shift, setShift] = useState({
     name: '',
     user: '',
-    start: '',
-    end: '',
+    startDate: '',
+    startTime: '',
+    endTime: '',
     rest: ''
   });
 
-  const { name, user, start, end, rest } = shift;
+  const { name, user, startDate, startTime, endTime, rest } = shift;
 
   const onChange = e =>
     setShift({
@@ -26,8 +27,9 @@ const ShiftForm = () => {
     setShift({
       name: '',
       user: '',
-      start: '',
-      end: '',
+      startDate: '',
+      startTime: '',
+      endTime: '',
       rest: ''
     });
   };
@@ -37,33 +39,31 @@ const ShiftForm = () => {
       <h2 className='text-primary'> Add Shift </h2>{' '}
       <input
         type='text'
-        name='name'
-        placeholder='Name'
-        value={name}
-        onChange={onChange}
-      />{' '}
-      <input
-        type='text'
         name='user'
         placeholder='User'
         value={user}
         onChange={onChange}
       />{' '}
+      Date:{' '}
+      <input
+        type='date'
+        name='startDate'
+        value={startDate}
+        onChange={onChange}
+      />{' '}
       Start time:{' '}
       <input
-        type='datetime-local'
-        name='start'
-        placeholder='Start Date'
-        value={start}
+        type='time'
+        name='startTime'
+        value={startTime}
         onChange={onChange}
       />{' '}
       <br />
       Finish time:{' '}
       <input
-        type='datetime-local'
-        name='end'
-        placeholder='End Date'
-        value={end}
+        type='time'
+        name='endTime'
+        value={endTime}
         onChange={onChange}
       />{' '}
       <br />
