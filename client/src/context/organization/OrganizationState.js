@@ -46,6 +46,12 @@ const OrganizationState = props => {
 
   // Delete Organization
 
+  const deleteOrganization = id => {
+    dispatch({
+      type: DELETE_ORGANIZATION,
+      payload: id
+    });
+  };
   // Set Current Organization
 
   // Clear Current Organization
@@ -60,9 +66,11 @@ const OrganizationState = props => {
     <OrganizationContext.Provider
       value={{
         organizations: state.organizations,
-        addOrganization
+        addOrganization,
+        deleteOrganization
       }}
     >
+      {' '}
       {props.children}{' '}
     </OrganizationContext.Provider>
   );

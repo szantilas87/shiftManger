@@ -14,6 +14,11 @@ export default (state, action) => {
             return {
                 ...state,
                 organizations: [...state.organizations, action.payload]
+            };
+        case DELETE_ORGANIZATION:
+            return {
+                ...state,
+                organizations: state.organizations.filter(organization => organization.id !== action.payload)
             }
             default:
                 return state;

@@ -1,6 +1,6 @@
 import {
     ADD_SHIFT,
-    DELETE_ORGANIZATION,
+    DELETE_SHIFT,
     SET_CURRENT,
     CLEAR_CURRENT,
     UPDATE_ORGANIZATION,
@@ -14,6 +14,11 @@ export default (state, action) => {
             return {
                 ...state,
                 shifts: [...state.shifts, action.payload]
+            };
+        case DELETE_SHIFT:
+            return {
+                ...state,
+                shifts: state.shifts.filter(shift => shift.id !== action.payload)
             }
             default:
                 return state;

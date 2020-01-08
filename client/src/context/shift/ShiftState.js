@@ -4,7 +4,7 @@ import shiftReducer from './shiftReducer';
 import ShiftContext from './shiftContext';
 import {
   ADD_SHIFT,
-  DELETE_ORGANIZATION,
+  DELETE_SHIFT,
   SET_CURRENT,
   CLEAR_CURRENT,
   UPDATE_ORGANIZATION,
@@ -55,6 +55,13 @@ const ShiftState = props => {
 
   // Delete Organization
 
+  const deleteShift = id => {
+    dispatch({
+      type: DELETE_SHIFT,
+      payload: id
+    });
+  };
+
   // Set Current Organization
 
   // Clear Current Organization
@@ -69,7 +76,8 @@ const ShiftState = props => {
     <ShiftContext.Provider
       value={{
         shifts: state.shifts,
-        addShift
+        addShift,
+        deleteShift
       }}
     >
       {' '}

@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import OrganizationContext from '../../context/organization/organizationContext';
 
 const OrganizationItem = ({ organization }) => {
+  const organizationContext = useContext(OrganizationContext);
+  const { deleteOrganization } = organizationContext;
+
   const { id, name, rate } = organization;
+
+  const onDelete = () => {
+    deleteOrganization(id);
+  };
+
   return (
     <div className='card bg-light'>
       <h3 className='text-left'>
@@ -22,7 +31,9 @@ const OrganizationItem = ({ organization }) => {
       <p>
         <button className='btn btn-success'> Join </button>{' '}
         <button className='btn btn-dark '> Edit </button>{' '}
-        <button className='btn btn-danger'> Delete </button>{' '}
+        <button className='btn btn-danger' onClick={onDelete}>
+          Delete
+        </button>
       </p>{' '}
     </div>
   );

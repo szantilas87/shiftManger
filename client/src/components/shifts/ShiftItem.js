@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-
-{
-  /* <li> {getMinutes(startTime)}</li> */
-}
+import ShiftContext from '../../context/shift/shiftContext';
 
 const ShiftItem = ({ shift }) => {
+  const shiftContext = useContext(ShiftContext);
+  const { deleteShift } = shiftContext;
+
   const { id, user, name, startDate, startTime, endTime, rest } = shift;
+
+  const onDelete = () => {
+    deleteShift(id);
+  };
 
   const getMinutes = val => {
     let t = val.split(':');
@@ -34,15 +38,15 @@ const ShiftItem = ({ shift }) => {
 
   return (
     <tr>
-      <td> {user} </td>
-      <td> {startDate} </td>
-      <td> {startTime} </td>
-      <td> {endTime} </td>
-      <td> {restMin} </td>
-      <td> {workedHours(startMin, endMin)} </td>
-      <td>{getPaid(startMin, endMin, restMin)}</td>
+      <td> {user} </td> <td> {startDate} </td> <td> {startTime} </td>{' '}
+      <td> {endTime} </td> <td> {restMin} </td>{' '}
+      <td> {workedHours(startMin, endMin)} </td>{' '}
+      <td> {getPaid(startMin, endMin, restMin)} </td>{' '}
       <button className='btn btn-dark btn-sm'> Edit </button>{' '}
-      <button className='btn btn-danger btn-sm'> Delete </button>{' '}
+      <button className='btn btn-danger btn-sm' onClick={onDelete}>
+        {' '}
+        Delete{' '}
+      </button>{' '}
     </tr>
   );
 };
