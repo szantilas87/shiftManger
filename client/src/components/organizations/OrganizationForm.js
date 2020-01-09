@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
 import OrganizationContext from '../../context/organization/organizationContext';
-import { set } from 'mongoose';
 
 const OrganizationForm = () => {
   const organizationContext = useContext(OrganizationContext);
