@@ -13,12 +13,13 @@ const OrganizationItem = ({ organization }) => {
     clearCurrentOrganization
   } = organizationContext;
 
-  const { getOrganization } = authContext;
+  const { getOrganization, loadOrganization } = authContext;
 
   const { id, name, rate } = organization;
 
   const getOrg = () => {
     getOrganization({ name: name });
+    loadOrganization();
   };
 
   const onDelete = () => {

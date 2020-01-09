@@ -7,8 +7,11 @@ import AuthContext from '../../context/auth/authContext';
 const Home = () => {
   const authContext = useContext(AuthContext);
 
+  const { loadUser, loadOrganization } = authContext;
+
   useEffect(() => {
-    authContext.loadUser();
+    loadUser();
+    loadOrganization();
     // eslint-disable-next-line
   }, []);
   return (

@@ -8,7 +8,9 @@ import {
     LOGOUT,
     CLEAR_ERRORS,
     GET_ORGANIZATION_TOKEN,
-    GET_TOKEN_FAIL
+    GET_TOKEN_FAIL,
+    ORGANIZATION_LOADED,
+    ORGANIZATION_ERROR
 } from '../types';
 
 export default (state, action) => {
@@ -19,6 +21,18 @@ export default (state, action) => {
                 isAuthenticated: true,
                     loading: false,
                     user: action.payload
+            };
+        case ORGANIZATION_LOADED:
+            return {
+                ...state,
+                organization: action.payload
+            };
+        case ORGANIZATION_ERROR:
+            localStorage.removeItem('organizationToken');
+            return {
+                ...state,
+                organizationToken: null,
+                    error: action.payload
             };
         case REGISTER_SUCCESS:
         case LOGIN_SUCCESS:

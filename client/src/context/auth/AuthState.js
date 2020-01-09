@@ -2,9 +2,11 @@ import React, { useReducer } from 'react';
 import axios from 'axios';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
-import setAuthToken from './../../utils/setAuthToken';
+import setAuthUserToken from '../../utils/setAuthUserToken';
+import setAuthOrgToken from '../../utils/setAuthOrgToken';
 import {
   REGISTER_SUCCESS,
+  ORGANIZATION_ERROR,
   REGISTER_FAIL,
   USER_LOADED,
   AUTH_ERROR,
@@ -13,7 +15,8 @@ import {
   LOGOUT,
   CLEAR_ERRORS,
   GET_ORGANIZATION_TOKEN,
-  GET_TOKEN_FAIL
+  GET_TOKEN_FAIL,
+  ORGANIZATION_LOADED
 } from '../types';
 
 const AuthState = props => {
@@ -23,7 +26,8 @@ const AuthState = props => {
     isAuthenticated: null,
     loading: true,
     user: null,
-    error: null
+    error: null,
+    organization: null
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -31,8 +35,9 @@ const AuthState = props => {
   //   Load User
   const loadUser = async () => {
     if (localStorage.userToken) {
-      setAuthToken(localStorage.userToken);
+      setAuthUserToken(localStorage.userToken);
     }
+
     try {
       const res = await axios.get('/api/auth');
       dispatch({
@@ -45,6 +50,25 @@ const AuthState = props => {
       });
     }
   };
+  // Load Organization
+  const loadOrganization = async () => {
+    if (localStorage.organizationToken) {
+      setAuthOrgToken(localStorage.organizationToken);
+    }
+
+    try {
+      const res = await axios.get('/api/organization');
+      dispatch({
+        type: ORGANIZATION_LOADED,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: ORGANIZATION_ERROR
+      });
+    }
+  };
+
   // Register User
   const register = async formData => {
     const config = {
@@ -133,6 +157,7 @@ const AuthState = props => {
         organizationToken: state.organizationToken,
         isAuthenticated: state.isAuthenticated,
         loading: state.loading,
+        organization: state.organization,
         user: state.user,
         error: state.error,
         register,
@@ -140,7 +165,8 @@ const AuthState = props => {
         login,
         logout,
         clearErrors,
-        getOrganization
+        getOrganization,
+        loadOrganization
       }}
     >
       {props.children}{' '}
