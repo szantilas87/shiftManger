@@ -1,8 +1,8 @@
 import {
     ADD_ORGANIZATION,
     DELETE_ORGANIZATION,
-    SET_CURRENT,
-    CLEAR_CURRENT,
+    SET_CURRENT_ORGANIZATION,
+    CLEAR_CURRENT_ORGANIZATION,
     UPDATE_ORGANIZATION,
     FILTER_ORGANIZATIONS,
     CLEAR_FILTER
@@ -19,8 +19,18 @@ export default (state, action) => {
             return {
                 ...state,
                 organizations: state.organizations.filter(organization => organization.id !== action.payload)
-            }
-            default:
-                return state;
+            };
+        case SET_CURRENT_ORGANIZATION:
+            return {
+                ...state,
+                current: action.payload
+            };
+        case CLEAR_CURRENT_ORGANIZATION:
+            return {
+                ...state,
+                current: null
+            };
+        default:
+            return state;
     }
 }

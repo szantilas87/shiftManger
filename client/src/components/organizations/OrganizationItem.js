@@ -4,12 +4,17 @@ import OrganizationContext from '../../context/organization/organizationContext'
 
 const OrganizationItem = ({ organization }) => {
   const organizationContext = useContext(OrganizationContext);
-  const { deleteOrganization } = organizationContext;
+  const {
+    deleteOrganization,
+    setCurrentOrganization,
+    clearCurrentOrganization
+  } = organizationContext;
 
   const { id, name, rate } = organization;
 
   const onDelete = () => {
     deleteOrganization(id);
+    clearCurrentOrganization();
   };
 
   return (
@@ -30,7 +35,13 @@ const OrganizationItem = ({ organization }) => {
       <br />
       <p>
         <button className='btn btn-success'> Join </button>{' '}
-        <button className='btn btn-dark '> Edit </button>{' '}
+        <button
+          className='btn btn-dark '
+          onClick={() => setCurrentOrganization(organization)}
+        >
+          {' '}
+          Edit{' '}
+        </button>{' '}
         <button className='btn btn-danger' onClick={onDelete}>
           Delete
         </button>

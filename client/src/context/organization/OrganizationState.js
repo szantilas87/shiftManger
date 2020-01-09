@@ -5,8 +5,8 @@ import OrganizationContext from './organizationContext';
 import {
   ADD_ORGANIZATION,
   DELETE_ORGANIZATION,
-  SET_CURRENT,
-  CLEAR_CURRENT,
+  SET_CURRENT_ORGANIZATION,
+  CLEAR_CURRENT_ORGANIZATION,
   UPDATE_ORGANIZATION,
   FILTER_ORGANIZATIONS,
   CLEAR_FILTER
@@ -30,7 +30,8 @@ const OrganizationState = props => {
         name: 'org3',
         rate: '30'
       }
-    ]
+    ],
+    current: null
   };
 
   const [state, dispatch] = useReducer(organizationReducer, initialState);
@@ -53,9 +54,19 @@ const OrganizationState = props => {
     });
   };
   // Set Current Organization
+  const setCurrentOrganization = organization => {
+    dispatch({
+      type: SET_CURRENT_ORGANIZATION,
+      payload: organization
+    });
+  };
 
   // Clear Current Organization
-
+  const clearCurrentOrganization = () => {
+    dispatch({
+      type: CLEAR_CURRENT_ORGANIZATION
+    });
+  };
   // Update Organization
 
   // Filter Organizations
@@ -66,8 +77,11 @@ const OrganizationState = props => {
     <OrganizationContext.Provider
       value={{
         organizations: state.organizations,
+        current: state.current,
         addOrganization,
-        deleteOrganization
+        deleteOrganization,
+        setCurrentOrganization,
+        clearCurrentOrganization
       }}
     >
       {' '}

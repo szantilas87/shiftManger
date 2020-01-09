@@ -1,8 +1,8 @@
 import {
     ADD_SHIFT,
     DELETE_SHIFT,
-    SET_CURRENT,
-    CLEAR_CURRENT,
+    SET_CURRENT_SHIFT,
+    CLEAR_CURRENT_SHIFT,
     UPDATE_ORGANIZATION,
     FILTER_ORGANIZATIONS,
     CLEAR_FILTER
@@ -19,8 +19,18 @@ export default (state, action) => {
             return {
                 ...state,
                 shifts: state.shifts.filter(shift => shift.id !== action.payload)
-            }
-            default:
-                return state;
+            };
+        case SET_CURRENT_SHIFT:
+            return {
+                ...state,
+                current: action.payload
+            };
+        case CLEAR_CURRENT_SHIFT:
+            return {
+                ...state,
+                current: null
+            };
+        default:
+            return state;
     }
 }

@@ -4,12 +4,13 @@ import ShiftContext from '../../context/shift/shiftContext';
 
 const ShiftItem = ({ shift }) => {
   const shiftContext = useContext(ShiftContext);
-  const { deleteShift } = shiftContext;
+  const { deleteShift, setCurrentShift, clearCurrentShift } = shiftContext;
 
   const { id, user, name, startDate, startTime, endTime, rest } = shift;
 
   const onDelete = () => {
     deleteShift(id);
+    clearCurrentShift();
   };
 
   const getMinutes = val => {
@@ -30,19 +31,32 @@ const ShiftItem = ({ shift }) => {
     return Math.round(pay);
   };
 
-  const workedHours = (start, end) => {
-    let hours = (end - start) / 60;
-
-    return hours.toFixed(2);
+  const workedHours = (start, end, rest) => {
+    let totalMinutes = end - start - rest;
+    let h = Math.floor(totalMinutes / 60);
+    let m = totalMinutes % 60;
+    h = h < 10 ? '0' + h : h;
+    m = m < 10 ? '0' + m : m;
+    return h + ':' + m;
   };
 
   return (
     <tr>
       <td> {user} </td> <td> {startDate} </td> <td> {startTime} </td>{' '}
       <td> {endTime} </td> <td> {restMin} </td>{' '}
-      <td> {workedHours(startMin, endMin)} </td>{' '}
-      <td> {getPaid(startMin, endMin, restMin)} </td>{' '}
-      <button className='btn btn-dark btn-sm'> Edit </button>{' '}
+      <td> {workedHours(startMin, endMin, restMin)} </td>{' '}
+      <td>
+        {' '}
+        {getPaid(startMin, endMin, restMin)}{' '}
+        <i className='fas fa-dollar-sign'></i>{' '}
+      </td>{' '}
+      <button
+        className='btn btn-dark btn-sm'
+        onClick={() => setCurrentShift(shift)}
+      >
+        {' '}
+        Edit{' '}
+      </button>{' '}
       <button className='btn btn-danger btn-sm' onClick={onDelete}>
         {' '}
         Delete{' '}
