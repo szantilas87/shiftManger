@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import OrganizationContext from '../../context/organization/organizationContext';
 import AuthContext from '../../context/auth/authContext';
+import { Link } from 'react-router-dom';
 
 const OrganizationItem = ({ organization }) => {
   const organizationContext = useContext(OrganizationContext);
@@ -15,6 +16,10 @@ const OrganizationItem = ({ organization }) => {
   const { getOrganization } = authContext;
 
   const { id, name, rate } = organization;
+
+  const getOrg = () => {
+    getOrganization({ name: name });
+  };
 
   const onDelete = () => {
     deleteOrganization(id);
@@ -38,13 +43,13 @@ const OrganizationItem = ({ organization }) => {
       <br />
       <br />
       <p>
-        <button
-          className='btn btn-success'
-          onClick={() => getOrganization({ name: name })}
-        >
+        <Link to='/shifts'>
           {' '}
-          Join{' '}
-        </button>{' '}
+          <button className='btn btn-success' onClick={getOrg}>
+            {' '}
+            Join{' '}
+          </button>
+        </Link>{' '}
         <button
           className='btn btn-dark '
           onClick={() => setCurrentOrganization(organization)}

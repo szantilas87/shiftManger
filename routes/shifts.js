@@ -23,7 +23,7 @@ router.get('/', authOrganization, async (req, res) => {
         });
         res.json(shifts);
     } catch (err) {
-        console.log(err.message);
+        console.error(err.message);
         res.status(500).send('Server Error');
     }
 });

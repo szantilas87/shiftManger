@@ -71,8 +71,7 @@ router.post('/', [check('name', 'Please add name')
                 });
             });
     } catch (err) {
-        console.log('aa')
-        console.log(err.message);
+        console.error(err.message);
         res.status(500).send('Server Error');
     }
 });

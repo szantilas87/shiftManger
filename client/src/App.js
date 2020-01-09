@@ -12,7 +12,12 @@ import OrganizationState from './context/organization/OrganizationState';
 import ShiftState from './context/shift/ShiftState';
 import AuthState from './context/auth/AuthState';
 import AlertState from './context/alert/AlertState';
+import setAuthToken from './utils/setAuthToken';
 import './App.css';
+
+if (localStorage.userToken) {
+  setAuthToken(localStorage.userToken);
+}
 
 const App = () => {
   return (

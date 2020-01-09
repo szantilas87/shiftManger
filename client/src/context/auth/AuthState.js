@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import axios from 'axios';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
-// import setAuthToken from '../../utils/setAuthToken';
+import setAuthToken from './../../utils/setAuthToken';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -30,9 +30,9 @@ const AuthState = props => {
 
   //   Load User
   const loadUser = async () => {
-    // if (localStorage.userToken) {
-    //   setAuthToken(localStorage.userToken);
-    // }
+    if (localStorage.userToken) {
+      setAuthToken(localStorage.userToken);
+    }
     try {
       const res = await axios.get('/api/auth');
       dispatch({
@@ -101,7 +101,6 @@ const AuthState = props => {
 
   // Get token for organization
   const getOrganization = async name => {
-    console.log(name);
     const config = {
       headers: {
         'Content-Type': 'application/json'
