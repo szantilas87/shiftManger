@@ -31,7 +31,8 @@ const OrganizationState = props => {
         rate: '30'
       }
     ],
-    current: null
+    current: null,
+    filtered: null
   };
 
   const [state, dispatch] = useReducer(organizationReducer, initialState);
@@ -68,20 +69,41 @@ const OrganizationState = props => {
     });
   };
   // Update Organization
+  const updateOrganization = organization => {
+    dispatch({
+      type: UPDATE_ORGANIZATION,
+      payload: organization
+    });
+  };
 
   // Filter Organizations
+  const filterOrganizations = text => {
+    dispatch({
+      type: FILTER_ORGANIZATIONS,
+      payload: text
+    });
+  };
 
   // Clear Filter
+  const clearFilter = () => {
+    dispatch({
+      type: CLEAR_FILTER
+    });
+  };
 
   return (
     <OrganizationContext.Provider
       value={{
         organizations: state.organizations,
         current: state.current,
+        filtered: state.filtered,
         addOrganization,
         deleteOrganization,
         setCurrentOrganization,
-        clearCurrentOrganization
+        clearCurrentOrganization,
+        updateOrganization,
+        filterOrganizations,
+        clearFilter
       }}
     >
       {' '}

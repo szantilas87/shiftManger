@@ -94,7 +94,7 @@ img {
 .card {
   padding: 1rem;
   border: #ccc 1px dotted;
-  margin: 0.7rem 5rem;
+  margin-top: 1rem;
 }
 
 /* List */
@@ -458,6 +458,12 @@ table th {
   text-align: left;
   background-color: #4CAF50;
   color: white;
+}
+
+.shift-form {
+  width: 60%;
+  display: block;
+  margin: auto;
 }
 
 /* Mobile Styles */

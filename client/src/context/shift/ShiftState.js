@@ -7,8 +7,8 @@ import {
   DELETE_SHIFT,
   SET_CURRENT_SHIFT,
   CLEAR_CURRENT_SHIFT,
-  UPDATE_ORGANIZATION,
-  FILTER_ORGANIZATIONS,
+  UPDATE_SHIFT,
+  FILTER_SHIFTS,
   CLEAR_FILTER
 } from '../types';
 
@@ -40,7 +40,8 @@ const ShiftState = props => {
         rest: '00:20'
       }
     ],
-    current: null
+    current: null,
+    filtered: null
   };
 
   const [state, dispatch] = useReducer(shiftReducer, initialState);
@@ -79,19 +80,41 @@ const ShiftState = props => {
 
   // Update Shift
 
+  const updateShift = shift => {
+    dispatch({
+      type: UPDATE_SHIFT,
+      payload: shift
+    });
+  };
+
   // Filter Shifts
+  const filterShifts = text => {
+    dispatch({
+      type: FILTER_SHIFTS,
+      payload: text
+    });
+  };
 
   // Clear Filter
+  const clearFilter = () => {
+    dispatch({
+      type: CLEAR_FILTER
+    });
+  };
 
   return (
     <ShiftContext.Provider
       value={{
         shifts: state.shifts,
         current: state.current,
+        filtered: state.filtered,
         addShift,
         deleteShift,
         setCurrentShift,
-        clearCurrentShift
+        clearCurrentShift,
+        updateShift,
+        filterShifts,
+        clearFilter
       }}
     >
       {' '}

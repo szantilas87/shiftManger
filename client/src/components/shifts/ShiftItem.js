@@ -41,27 +41,28 @@ const ShiftItem = ({ shift }) => {
   };
 
   return (
-    <tr>
-      <td> {user} </td> <td> {startDate} </td> <td> {startTime} </td>{' '}
-      <td> {endTime} </td> <td> {restMin} </td>{' '}
-      <td> {workedHours(startMin, endMin, restMin)} </td>{' '}
-      <td>
-        {' '}
-        {getPaid(startMin, endMin, restMin)}{' '}
-        <i className='fas fa-dollar-sign'></i>{' '}
-      </td>{' '}
-      <button
-        className='btn btn-dark btn-sm'
-        onClick={() => setCurrentShift(shift)}
-      >
-        {' '}
-        Edit{' '}
-      </button>{' '}
-      <button className='btn btn-danger btn-sm' onClick={onDelete}>
-        {' '}
-        Delete{' '}
-      </button>{' '}
-    </tr>
+    <tbody>
+      <tr>
+        <td>{user}</td> <td>{startDate}</td> <td>{startTime}</td>
+        <td>{endTime}</td> <td>{restMin}</td>
+        <td> {workedHours(startMin, endMin, restMin)}</td>
+        <td>
+          {getPaid(startMin, endMin, restMin)}
+          <i className='fas fa-dollar-sign'></i>
+        </td>
+        <td>
+          <button
+            className='btn btn-dark btn-sm'
+            onClick={() => setCurrentShift(shift)}
+          >
+            Edit
+          </button>
+          <button className='btn btn-danger btn-sm' onClick={onDelete}>
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
   );
 };
 

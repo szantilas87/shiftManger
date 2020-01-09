@@ -1,17 +1,18 @@
 import React from 'react';
 import Organizations from '../organizations/Organizations';
 import OrganizationForm from '../organizations/OrganizationForm';
-import OrganizationItem from '../organizations/OrganizationItem';
+import OrganizationFilter from '../organizations/OrganizationFilter';
 
 const Home = () => {
   return (
     <div className='grid-2'>
       <div>
         <OrganizationForm />
-      </div>
+      </div>{' '}
       <div>
+        <OrganizationFilter />
         <Organizations />
-      </div>
+      </div>{' '}
     </div>
   );
 };

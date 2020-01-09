@@ -1,6 +1,7 @@
 import React from 'react';
 import Shifts from '../shifts/Shifts';
 import ShiftForm from '../shifts/ShiftForm';
+import ShiftFilter from '../shifts/ShiftFilter';
 
 const ShiftsView = () => {
   return (
@@ -8,13 +9,16 @@ const ShiftsView = () => {
       <br />
       <br />
       <div>
+        <ShiftFilter />
         <Shifts />
       </div>{' '}
       <br />
       <br />
-      <div>
+      <div className='shift-form'>
         <ShiftForm />
       </div>{' '}
+      <br />
+      <br />
     </div>
   );
 };

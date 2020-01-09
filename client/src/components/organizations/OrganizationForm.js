@@ -1,8 +1,27 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import OrganizationContext from '../../context/organization/organizationContext';
+import { set } from 'mongoose';
 
 const OrganizationForm = () => {
   const organizationContext = useContext(OrganizationContext);
+
+  const {
+    addOrganization,
+    clearCurrentOrganization,
+    updateOrganization,
+    current
+  } = organizationContext;
+
+  useEffect(() => {
+    if (current !== null) {
+      setOrganization(current);
+    } else {
+      setOrganization({
+        name: '',
+        rate: ''
+      });
+    }
+  }, [organizationContext, current]);
 
   const [organization, setOrganization] = useState({
     name: '',
@@ -19,16 +38,24 @@ const OrganizationForm = () => {
 
   const onSubmit = e => {
     e.preventDefault();
-    organizationContext.addOrganization(organization);
-    setOrganization({
-      name: '',
-      rate: ''
-    });
+    if (current === null) {
+      addOrganization(organization);
+    } else {
+      updateOrganization(organization);
+    }
+    clearAll();
+  };
+
+  const clearAll = () => {
+    clearCurrentOrganization();
   };
 
   return (
     <form onSubmit={onSubmit}>
-      <h2 className='text-primary'> Add Contact </h2>{' '}
+      <h2 className='text-primary'>
+        {' '}
+        {current ? 'Edit Organization' : 'Add Organization'}
+      </h2>{' '}
       <input
         type='text'
         name='name'
@@ -47,10 +74,17 @@ const OrganizationForm = () => {
       <div>
         <input
           type='submit'
-          value='Add Organization'
+          value={current ? 'Update Organization' : 'Add Organization'}
           className='btn btn-primary btn-block'
         />
       </div>{' '}
+      {current && (
+        <div>
+          <button className='btn btn-light btn-block' onClick={clearAll}>
+            Clear
+          </button>
+        </div>
+      )}
     </form>
   );
 };

@@ -15,6 +15,11 @@ export default (state, action) => {
                 ...state,
                 organizations: [...state.organizations, action.payload]
             };
+        case UPDATE_ORGANIZATION:
+            return {
+                ...state,
+                organizations: state.organizations.map(organization => organization.id === action.payload.id ? action.payload : organization)
+            };
         case DELETE_ORGANIZATION:
             return {
                 ...state,
@@ -29,6 +34,19 @@ export default (state, action) => {
             return {
                 ...state,
                 current: null
+            };
+        case FILTER_ORGANIZATIONS:
+            return {
+                ...state,
+                filtered: state.organizations.filter(organization => {
+                    const regex = new RegExp(`${action.payload}`, 'gi');
+                    return organization.name.match(regex) || organization.rate.match(regex);
+                })
+            };
+        case CLEAR_FILTER:
+            return {
+                ...state,
+                filtered: null
             };
         default:
             return state;

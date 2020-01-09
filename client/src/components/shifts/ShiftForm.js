@@ -1,8 +1,24 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import ShiftContext from '../../context/shift/shiftContext';
 
 const ShiftForm = () => {
   const shiftContext = useContext(ShiftContext);
+  const { addShift, clearCurrentShift, updateShift, current } = shiftContext;
+
+  useEffect(() => {
+    if (current !== null) {
+      setShift(current);
+    } else {
+      setShift({
+        name: '',
+        user: '',
+        startDate: '',
+        startTime: '',
+        endTime: '',
+        rest: ''
+      });
+    }
+  }, [shiftContext, current]);
 
   const [shift, setShift] = useState({
     name: '',
@@ -23,20 +39,21 @@ const ShiftForm = () => {
 
   const onSubmit = e => {
     e.preventDefault();
-    shiftContext.addShift(shift);
-    setShift({
-      name: '',
-      user: '',
-      startDate: '',
-      startTime: '',
-      endTime: '',
-      rest: ''
-    });
+    if (current === null) {
+      addShift(shift);
+    } else {
+      updateShift(shift);
+    }
+    clearAll();
+  };
+
+  const clearAll = () => {
+    clearCurrentShift();
   };
 
   return (
     <form onSubmit={onSubmit}>
-      <h2 className='text-primary'> Add Shift </h2>{' '}
+      <h2 className='text-primary'> {current ? 'Edit Shift' : 'Add Shift'} </h2>{' '}
       <input
         type='text'
         name='user'
@@ -78,10 +95,17 @@ const ShiftForm = () => {
       <div>
         <input
           type='submit'
-          value='Add Shift'
+          value={current ? 'Update Shift' : 'Add Shift'}
           className='btn btn-primary btn-block'
         />
       </div>{' '}
+      {current && (
+        <div>
+          <button className='btn btn-light btn-block' onClick={clearAll}>
+            Clear
+          </button>
+        </div>
+      )}
     </form>
   );
 };
