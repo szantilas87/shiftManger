@@ -1,14 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import OrganizationContext from '../../context/organization/organizationContext';
+import AuthContext from '../../context/auth/authContext';
 
 const OrganizationItem = ({ organization }) => {
   const organizationContext = useContext(OrganizationContext);
+  const authContext = useContext(AuthContext);
   const {
     deleteOrganization,
     setCurrentOrganization,
     clearCurrentOrganization
   } = organizationContext;
+
+  const { getOrganization } = authContext;
 
   const { id, name, rate } = organization;
 
@@ -34,7 +38,13 @@ const OrganizationItem = ({ organization }) => {
       <br />
       <br />
       <p>
-        <button className='btn btn-success'> Join </button>{' '}
+        <button
+          className='btn btn-success'
+          onClick={() => getOrganization({ name: name })}
+        >
+          {' '}
+          Join{' '}
+        </button>{' '}
         <button
           className='btn btn-dark '
           onClick={() => setCurrentOrganization(organization)}
@@ -43,8 +53,8 @@ const OrganizationItem = ({ organization }) => {
           Edit{' '}
         </button>{' '}
         <button className='btn btn-danger' onClick={onDelete}>
-          Delete
-        </button>
+          Delete{' '}
+        </button>{' '}
       </p>{' '}
     </div>
   );

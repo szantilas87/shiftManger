@@ -11,12 +11,15 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  GET_ORGANIZATION_TOKEN,
+  GET_TOKEN_FAIL
 } from '../types';
 
 const AuthState = props => {
   const initialState = {
-    token: localStorage.getItem('token'),
+    userToken: localStorage.getItem('userToken'),
+    organizationToken: localStorage.getItem('organizationToken'),
     isAuthenticated: null,
     loading: true,
     user: null,
@@ -27,20 +30,20 @@ const AuthState = props => {
 
   //   Load User
   const loadUser = async () => {
-    // if (localStorage.token) {
-    //   setAuthToken(localStorage.token);
+    // if (localStorage.userToken) {
+    //   setAuthToken(localStorage.userToken);
     // }
-    // try {
-    //   const res = await axios.get('/api/auth');
-    //   dispatch({
-    //     type: USER_LOADED,
-    //     payload: res.data
-    //   });
-    // } catch (err) {
-    //   dispatch({
-    //     type: AUTH_ERROR
-    //   });
-    // }
+    try {
+      const res = await axios.get('/api/auth');
+      dispatch({
+        type: USER_LOADED,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: AUTH_ERROR
+      });
+    }
   };
   // Register User
   const register = async formData => {
@@ -96,6 +99,28 @@ const AuthState = props => {
       type: LOGOUT
     });
 
+  // Get token for organization
+  const getOrganization = async name => {
+    console.log(name);
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    try {
+      const res = await axios.post('/api/organization', name, config);
+
+      dispatch({
+        type: GET_ORGANIZATION_TOKEN,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: GET_TOKEN_FAIL,
+        payload: err.response.data.msg
+      });
+    }
+  };
   // Clear Errors
   const clearErrors = () =>
     dispatch({
@@ -105,7 +130,8 @@ const AuthState = props => {
   return (
     <AuthContext.Provider
       value={{
-        token: state.token,
+        userToken: state.userToken,
+        organizationToken: state.organizationToken,
         isAuthenticated: state.isAuthenticated,
         loading: state.loading,
         user: state.user,
@@ -114,7 +140,8 @@ const AuthState = props => {
         loadUser,
         login,
         logout,
-        clearErrors
+        clearErrors,
+        getOrganization
       }}
     >
       {props.children}{' '}

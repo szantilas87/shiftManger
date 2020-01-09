@@ -21,3 +21,5 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+export const GET_ORGANIZATION_TOKEN = 'GET_ORGANIZATION_TOKEN';
+export const GET_TOKEN_FAIL = 'GET_TOKEN_FAIL';
