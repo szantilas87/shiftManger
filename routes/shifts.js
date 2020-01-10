@@ -17,7 +17,7 @@ const Organization = require('../models/Organization');
 router.get('/', authOrganization, async (req, res) => {
     try {
         const shifts = await Shift.find({
-            organization: req.organization.id
+            organization: req.organization.id,
         }).sort({
             date: -1
         });
@@ -31,7 +31,7 @@ router.get('/', authOrganization, async (req, res) => {
 // @route   POST api/shifts
 // @desc    Add new shift
 // @access  Private
-router.post('/', [authUser, authOrganization, [check('name', 'Name is required').not().isEmpty()]], async (req, res) => {
+router.post('/', [authUser, authOrganization], async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({
@@ -40,7 +40,6 @@ router.post('/', [authUser, authOrganization, [check('name', 'Name is required')
     }
 
     const {
-        name,
         startDate,
         startTime,
         endTime,
@@ -49,7 +48,6 @@ router.post('/', [authUser, authOrganization, [check('name', 'Name is required')
 
     try {
         const newShift = new Shift({
-            name,
             startDate,
             startTime,
             endTime,

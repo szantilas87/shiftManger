@@ -6,7 +6,7 @@ const ShiftItem = ({ shift }) => {
   const shiftContext = useContext(ShiftContext);
   const { deleteShift, setCurrentShift, clearCurrentShift } = shiftContext;
 
-  const { id, user, name, startDate, startTime, endTime, rest } = shift;
+  const { id, user, startDate, startTime, endTime, rest } = shift;
 
   const onDelete = () => {
     deleteShift(id);
@@ -44,26 +44,27 @@ const ShiftItem = ({ shift }) => {
     <Fragment>
       <tbody>
         <tr>
-          <td>{user}</td> <td>{startDate}</td> <td>{startTime}</td>
-          <td>{endTime}</td> <td>{restMin}</td>
-          <td> {workedHours(startMin, endMin, restMin)}</td>
+          <td> {user} </td> <td>{startDate}</td> <td> {startTime} </td>{' '}
+          <td> {endTime} </td> <td>{restMin}</td>
+          <td> {workedHours(startMin, endMin, restMin)} </td>{' '}
           <td>
-            {getPaid(startMin, endMin, restMin)}
-            <i className='fas fa-dollar-sign'></i>
-          </td>
+            {' '}
+            {getPaid(startMin, endMin, restMin)}{' '}
+            <i className='fas fa-dollar-sign'> </i>{' '}
+          </td>{' '}
           <td>
             <button
               className='btn btn-dark btn-sm'
               onClick={() => setCurrentShift(shift)}
             >
-              Edit
-            </button>
+              Edit{' '}
+            </button>{' '}
             <button className='btn btn-danger btn-sm' onClick={onDelete}>
-              Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
+              Delete{' '}
+            </button>{' '}
+          </td>{' '}
+        </tr>{' '}
+      </tbody>{' '}
     </Fragment>
   );
 };

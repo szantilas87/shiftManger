@@ -8,14 +8,19 @@ const ShiftForm = props => {
   const authContext = useContext(AuthContext);
 
   const { leaveOrg } = authContext;
-  const { addShift, clearCurrentShift, updateShift, current } = shiftContext;
+  const {
+    addShift,
+    clearCurrentShift,
+    updateShift,
+    current,
+    clearShifts
+  } = shiftContext;
 
   useEffect(() => {
     if (current !== null) {
       setShift(current);
     } else {
       setShift({
-        name: '',
         user: '',
         startDate: '',
         startTime: '',
@@ -26,7 +31,6 @@ const ShiftForm = props => {
   }, [shiftContext, current]);
 
   const [shift, setShift] = useState({
-    name: '',
     user: '',
     startDate: '',
     startTime: '',
@@ -34,7 +38,7 @@ const ShiftForm = props => {
     rest: ''
   });
 
-  const { name, user, startDate, startTime, endTime, rest } = shift;
+  const { user, startDate, startTime, endTime, rest } = shift;
 
   const onChange = e =>
     setShift({
@@ -58,15 +62,16 @@ const ShiftForm = props => {
 
   const onLeave = () => {
     leaveOrg();
+    clearShifts();
   };
 
   return (
     <Fragment>
       <Link to='/'>
         <button className='btn btn-danger btn-block' onClick={onLeave}>
-          Leave Organization
-        </button>
-      </Link>
+          Leave Organization{' '}
+        </button>{' '}
+      </Link>{' '}
       <br />
       <br />
       <form onSubmit={onSubmit}>
@@ -74,13 +79,6 @@ const ShiftForm = props => {
           {' '}
           {current ? 'Edit Shift' : 'Add Shift'}{' '}
         </h2>{' '}
-        <input
-          type='text'
-          name='user'
-          placeholder='User'
-          value={user}
-          onChange={onChange}
-        />{' '}
         Date:{' '}
         <input
           type='date'
@@ -122,11 +120,11 @@ const ShiftForm = props => {
         {current && (
           <div>
             <button className='btn btn-light btn-block' onClick={clearAll}>
-              Clear
-            </button>
+              Clear{' '}
+            </button>{' '}
           </div>
-        )}
-      </form>
+        )}{' '}
+      </form>{' '}
     </Fragment>
   );
 };

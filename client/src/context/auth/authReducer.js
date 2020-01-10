@@ -55,9 +55,11 @@ export default (state, action) => {
             return {
                 ...state,
                 userToken: null,
+                    organizationToken: null,
                     isAuthenticated: false,
                     loading: false,
                     user: null,
+                    organization: null,
                     error: action.payload
             };
         case GET_ORGANIZATION_TOKEN:

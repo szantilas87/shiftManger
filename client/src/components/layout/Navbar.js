@@ -3,27 +3,32 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import AuthContext from '../../context/auth/authContext';
 import OrganizationContext from '../../context/organization/organizationContext';
+import ShiftContext from '../../context/shift/shiftContext';
+
 const Navbar = ({ title, icon }) => {
   const authContext = useContext(AuthContext);
   const organizationContext = useContext(OrganizationContext);
+  const shiftContext = useContext(ShiftContext);
 
   const { isAuthenticated, logout, user } = authContext;
-  // const { clearContacts } = organizationContext;
+  const { clearOrganizations } = organizationContext;
+  const { clearShifts } = shiftContext;
 
   const onLogout = () => {
     logout();
-    // clearContacts();
+    clearOrganizations();
+    clearShifts();
   };
 
   const authLinks = (
     <Fragment>
-      <li>Hello {user && user.name}</li>
+      <li> Hello {user && user.name} </li>{' '}
       <li>
         <a onClick={onLogout} href='#!'>
-          <i className='fas fa-sign-out-alt'></i>{' '}
-          <span className='hide-sm'>Logout</span>
-        </a>
-      </li>
+          <i className='fas fa-sign-out-alt'> </i>{' '}
+          <span className='hide-sm'> Logout </span>{' '}
+        </a>{' '}
+      </li>{' '}
     </Fragment>
   );
 
@@ -42,7 +47,7 @@ const Navbar = ({ title, icon }) => {
       <h1>
         <i className={icon}> </i> {title}{' '}
       </h1>{' '}
-      <ul>{isAuthenticated ? authLinks : guestLinks}</ul>{' '}
+      <ul> {isAuthenticated ? authLinks : guestLinks} </ul>{' '}
     </div>
   );
 };

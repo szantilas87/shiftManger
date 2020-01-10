@@ -1,49 +1,65 @@
 import React, { useReducer } from 'react';
-import uuid from 'uuid';
+import axios from 'axios';
 import organizationReducer from './organizationReducer';
 import OrganizationContext from './organizationContext';
 import {
+  GET_ORGANIZATIONS,
   ADD_ORGANIZATION,
   DELETE_ORGANIZATION,
   SET_CURRENT_ORGANIZATION,
   CLEAR_CURRENT_ORGANIZATION,
+  CLEAR_ORGANIZATIONS,
   UPDATE_ORGANIZATION,
   FILTER_ORGANIZATIONS,
-  CLEAR_FILTER
+  CLEAR_FILTER,
+  ERROR
 } from '../types';
 
 const OrganizationState = props => {
   const initialState = {
-    organizations: [
-      {
-        id: 1,
-        name: 'org',
-        rate: '10'
-      },
-      {
-        id: 2,
-        name: 'org2',
-        rate: '20'
-      },
-      {
-        id: 3,
-        name: 'org3',
-        rate: '10'
-      }
-    ],
+    organizations: null,
     current: null,
-    filtered: null
+    filtered: null,
+    error: null
   };
 
   const [state, dispatch] = useReducer(organizationReducer, initialState);
+  // Get Organizations
+  const getOrganizations = async () => {
+    try {
+      const res = await axios.get('/api/organizations');
+      dispatch({
+        type: GET_ORGANIZATIONS,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: ERROR,
+        payload: err.response.msg
+      });
+    }
+  };
 
   // Add Organization
-  const addOrganization = organization => {
-    organization.id = uuid.v4();
-    dispatch({
-      type: ADD_ORGANIZATION,
-      payload: organization
-    });
+  const addOrganization = async organization => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    try {
+      const res = await axios.post('/api/organizations', organization, config);
+      dispatch({
+        type: ADD_ORGANIZATION,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: ERROR,
+        payload: err.response.msg
+      });
+    }
   };
 
   // Delete Organization
@@ -52,6 +68,13 @@ const OrganizationState = props => {
     dispatch({
       type: DELETE_ORGANIZATION,
       payload: id
+    });
+  };
+
+  // Clear Organizations
+  const clearOrganizations = () => {
+    dispatch({
+      type: CLEAR_ORGANIZATIONS
     });
   };
   // Set Current Organization
@@ -97,13 +120,16 @@ const OrganizationState = props => {
         organizations: state.organizations,
         current: state.current,
         filtered: state.filtered,
+        error: state.error,
         addOrganization,
         deleteOrganization,
         setCurrentOrganization,
         clearCurrentOrganization,
         updateOrganization,
         filterOrganizations,
-        clearFilter
+        clearFilter,
+        getOrganizations,
+        clearOrganizations
       }}
     >
       {' '}

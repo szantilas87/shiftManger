@@ -1,6 +1,8 @@
 import {
+    GET_SHIFTS,
     ADD_SHIFT,
     DELETE_SHIFT,
+    CLEAR_SHIFTS,
     SET_CURRENT_SHIFT,
     CLEAR_CURRENT_SHIFT,
     UPDATE_SHIFT,
@@ -10,20 +12,37 @@ import {
 
 export default (state, action) => {
     switch (action.type) {
+        case GET_SHIFTS:
+            return {
+                ...state,
+                shifts: action.payload,
+                    loading: false
+            };
         case ADD_SHIFT:
             return {
                 ...state,
-                shifts: [...state.shifts, action.payload]
+                shifts: [...state.shifts, action.payload],
+                    loading: false
             };
         case UPDATE_SHIFT:
             return {
                 ...state,
-                shifts: state.shifts.map(shift => shift.id === action.payload.id ? action.payload : shift)
+                shifts: state.shifts.map(shift => shift.id === action.payload.id ? action.payload : shift),
+                    loading: false
             };
         case DELETE_SHIFT:
             return {
                 ...state,
-                shifts: state.shifts.filter(shift => shift.id !== action.payload)
+                shifts: state.shifts.filter(shift => shift.id !== action.payload),
+                    loading: false
+            };
+        case CLEAR_SHIFTS:
+            return {
+                ...state,
+                shifts: [],
+                    filtered: null,
+                    error: null,
+                    current: null
             };
         case SET_CURRENT_SHIFT:
             return {
