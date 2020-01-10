@@ -41,7 +41,8 @@ export default (state, action) => {
                 ...state,
                 ...action.payload,
                     isAuthenticated: true,
-                    loading: false
+                    loading: false,
+                    userToken: action.payload.token
             };
         case REGISTER_FAIL:
         case AUTH_ERROR:
@@ -60,7 +61,8 @@ export default (state, action) => {
             localStorage.setItem('organizationToken', action.payload.token);
             return {
                 ...state,
-                ...action.payload
+                ...action.payload,
+                    organizationToken: action.payload.token
             };
         case GET_TOKEN_FAIL:
             localStorage.removeItem('organizationToken');

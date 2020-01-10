@@ -1,6 +1,4 @@
-import React, {
-  useReducer
-} from 'react';
+import React, { useReducer } from 'react';
 import uuid from 'uuid';
 import organizationReducer from './organizationReducer';
 import OrganizationContext from './organizationContext';
@@ -16,7 +14,8 @@ import {
 
 const OrganizationState = props => {
   const initialState = {
-    organizations: [{
+    organizations: [
+      {
         id: 1,
         name: 'org',
         rate: '10'
@@ -92,9 +91,9 @@ const OrganizationState = props => {
     });
   };
 
-  return ( <
-    OrganizationContext.Provider value = {
-      {
+  return (
+    <OrganizationContext.Provider
+      value={{
         organizations: state.organizations,
         current: state.current,
         filtered: state.filtered,
@@ -105,16 +104,11 @@ const OrganizationState = props => {
         updateOrganization,
         filterOrganizations,
         clearFilter
-      }
-    } >
-    {
-      ' '
-    } {
-      props.children
-    } {
-      ' '
-    } <
-    /OrganizationContext.Provider>
+      }}
+    >
+      {' '}
+      {props.children}{' '}
+    </OrganizationContext.Provider>
   );
 };
 
