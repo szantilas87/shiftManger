@@ -16,7 +16,8 @@ import {
   CLEAR_ERRORS,
   GET_ORGANIZATION_TOKEN,
   GET_TOKEN_FAIL,
-  ORGANIZATION_LOADED
+  ORGANIZATION_LOADED,
+  LEAVE_ORGANIZATION
 } from '../types';
 
 const AuthState = props => {
@@ -41,26 +42,13 @@ const AuthState = props => {
     try {
       const res = await axios.get('/api/auth');
 
-      dispatch({ type: USER_LOADED, payload: res.data });
-    } catch (err) {
-      dispatch({ type: AUTH_ERROR });
-    }
-  };
-  // Load Organization
-  const loadOrganization = async () => {
-    if (localStorage.organizationToken) {
-      setAuthOrgToken(localStorage.organizationToken);
-    }
-
-    try {
-      const res = await axios.get('/api/organization');
       dispatch({
-        type: ORGANIZATION_LOADED,
+        type: USER_LOADED,
         payload: res.data
       });
     } catch (err) {
       dispatch({
-        type: ORGANIZATION_ERROR
+        type: AUTH_ERROR
       });
     }
   };
@@ -142,6 +130,31 @@ const AuthState = props => {
       });
     }
   };
+
+  // Load Organization
+  const loadOrganization = async () => {
+    if (localStorage.organizationToken) {
+      setAuthOrgToken(localStorage.organizationToken);
+    }
+
+    try {
+      const res = await axios.get('/api/organization');
+      dispatch({
+        type: ORGANIZATION_LOADED,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: ORGANIZATION_ERROR
+      });
+    }
+  };
+
+  // Leave organization
+  const leaveOrg = () =>
+    dispatch({
+      type: LEAVE_ORGANIZATION
+    });
   // Clear Errors
   const clearErrors = () =>
     dispatch({
@@ -164,7 +177,8 @@ const AuthState = props => {
         logout,
         clearErrors,
         getOrganization,
-        loadOrganization
+        loadOrganization,
+        leaveOrg
       }}
     >
       {props.children}{' '}

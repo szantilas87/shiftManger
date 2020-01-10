@@ -10,7 +10,8 @@ import {
     GET_ORGANIZATION_TOKEN,
     GET_TOKEN_FAIL,
     ORGANIZATION_LOADED,
-    ORGANIZATION_ERROR
+    ORGANIZATION_ERROR,
+    LEAVE_ORGANIZATION
 } from '../types';
 
 export default (state, action) => {
@@ -28,10 +29,12 @@ export default (state, action) => {
                 organization: action.payload
             };
         case ORGANIZATION_ERROR:
+        case LEAVE_ORGANIZATION:
             localStorage.removeItem('organizationToken');
             return {
                 ...state,
                 organizationToken: null,
+                    organization: null,
                     error: action.payload
             };
         case REGISTER_SUCCESS:

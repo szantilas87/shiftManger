@@ -1,8 +1,13 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, Fragment } from 'react';
 import ShiftContext from '../../context/shift/shiftContext';
+import AuthContext from '../../context/auth/authContext';
+import { Link } from 'react-router-dom';
 
-const ShiftForm = () => {
+const ShiftForm = props => {
   const shiftContext = useContext(ShiftContext);
+  const authContext = useContext(AuthContext);
+
+  const { leaveOrg } = authContext;
   const { addShift, clearCurrentShift, updateShift, current } = shiftContext;
 
   useEffect(() => {
@@ -51,62 +56,78 @@ const ShiftForm = () => {
     clearCurrentShift();
   };
 
+  const onLeave = () => {
+    leaveOrg();
+  };
+
   return (
-    <form onSubmit={onSubmit}>
-      <h2 className='text-primary'> {current ? 'Edit Shift' : 'Add Shift'} </h2>{' '}
-      <input
-        type='text'
-        name='user'
-        placeholder='User'
-        value={user}
-        onChange={onChange}
-      />{' '}
-      Date:{' '}
-      <input
-        type='date'
-        name='startDate'
-        value={startDate}
-        onChange={onChange}
-      />{' '}
-      Start time:{' '}
-      <input
-        type='time'
-        name='startTime'
-        value={startTime}
-        onChange={onChange}
-      />{' '}
+    <Fragment>
+      <Link to='/'>
+        <button className='btn btn-danger btn-block' onClick={onLeave}>
+          Leave Organization
+        </button>
+      </Link>
       <br />
-      Finish time:{' '}
-      <input
-        type='time'
-        name='endTime'
-        value={endTime}
-        onChange={onChange}
-      />{' '}
       <br />
-      Break:{' '}
-      <input
-        type='time'
-        name='rest'
-        placeholder='Break'
-        value={rest}
-        onChange={onChange}
-      />{' '}
-      <div>
+      <form onSubmit={onSubmit}>
+        <h2 className='text-primary'>
+          {' '}
+          {current ? 'Edit Shift' : 'Add Shift'}{' '}
+        </h2>{' '}
         <input
-          type='submit'
-          value={current ? 'Update Shift' : 'Add Shift'}
-          className='btn btn-primary btn-block'
-        />
-      </div>{' '}
-      {current && (
+          type='text'
+          name='user'
+          placeholder='User'
+          value={user}
+          onChange={onChange}
+        />{' '}
+        Date:{' '}
+        <input
+          type='date'
+          name='startDate'
+          value={startDate}
+          onChange={onChange}
+        />{' '}
+        Start time:{' '}
+        <input
+          type='time'
+          name='startTime'
+          value={startTime}
+          onChange={onChange}
+        />{' '}
+        <br />
+        Finish time:{' '}
+        <input
+          type='time'
+          name='endTime'
+          value={endTime}
+          onChange={onChange}
+        />{' '}
+        <br />
+        Break:{' '}
+        <input
+          type='time'
+          name='rest'
+          placeholder='Break'
+          value={rest}
+          onChange={onChange}
+        />{' '}
         <div>
-          <button className='btn btn-light btn-block' onClick={clearAll}>
-            Clear
-          </button>
-        </div>
-      )}
-    </form>
+          <input
+            type='submit'
+            value={current ? 'Update Shift' : 'Add Shift'}
+            className='btn btn-primary btn-block'
+          />{' '}
+        </div>{' '}
+        {current && (
+          <div>
+            <button className='btn btn-light btn-block' onClick={clearAll}>
+              Clear
+            </button>
+          </div>
+        )}
+      </form>
+    </Fragment>
   );
 };
 

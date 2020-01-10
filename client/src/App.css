@@ -219,6 +219,7 @@ img {
 .btn-block {
   display: block;
   width: 100%;
+  margin: auto;
 }
 
 .btn-sm {
@@ -338,6 +339,10 @@ textarea {
 input[type='submit'],
 button {
   font: inherit;
+}
+
+button a {
+  color: #fff;
 }
 
 .form-group {

@@ -11,7 +11,7 @@ const Home = () => {
 
   useEffect(() => {
     loadUser();
-    loadOrganization();
+    // loadOrganization();
     // eslint-disable-next-line
   }, []);
   return (
