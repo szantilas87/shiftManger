@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { check, validationResult } = require('express-validator');
+const {
+  check,
+  validationResult
+} = require('express-validator');
 
 const Organization = require('../models/Organization');
 const User = require('../models/User');
@@ -10,7 +13,9 @@ const User = require('../models/User');
 // @access  Private
 router.get('/', async (req, res) => {
   try {
-    const organizations = await Organization.find();
+    const organizations = await Organization.find().sort({
+      date: -1
+    });;
     res.json(organizations);
   } catch (error) {
     console.error(err.message);
@@ -25,8 +30,8 @@ router.post(
   '/',
   [
     check('name', 'Name is require')
-      .not()
-      .isEmpty()
+    .not()
+    .isEmpty()
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -36,7 +41,10 @@ router.post(
       });
     }
 
-    const { name, rate } = req.body;
+    const {
+      name,
+      rate
+    } = req.body;
 
     try {
       const newOrg = new Organization({
@@ -57,7 +65,10 @@ router.post(
 // @desc    Update organization
 // @access  Private
 router.put('/:id', async (req, res) => {
-  const { name, rate } = req.body;
+  const {
+    name,
+    rate
+  } = req.body;
 
   // Build organization object
   const organizationFields = {};
@@ -74,11 +85,9 @@ router.put('/:id', async (req, res) => {
       });
 
     organization = await Organization.findByIdAndUpdate(
-      req.params.id,
-      {
+      req.params.id, {
         $set: organizationFields
-      },
-      {
+      }, {
         new: true
       }
     );

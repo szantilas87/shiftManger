@@ -22,7 +22,7 @@ export default (state, action) => {
         case ADD_ORGANIZATION:
             return {
                 ...state,
-                organizations: [...state.organizations, action.payload],
+                organizations: [action.payload, ...state.organizations],
                     loading: false
             };
         case UPDATE_ORGANIZATION:
@@ -34,7 +34,7 @@ export default (state, action) => {
         case DELETE_ORGANIZATION:
             return {
                 ...state,
-                organizations: state.organizations.filter(organization => organization.id !== action.payload),
+                organizations: state.organizations.filter(organization => organization._id !== action.payload),
                     loading: false
             };
         case CLEAR_ORGANIZATIONS:

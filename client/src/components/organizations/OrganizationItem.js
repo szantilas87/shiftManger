@@ -2,11 +2,16 @@ import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import OrganizationContext from '../../context/organization/organizationContext';
 import AuthContext from '../../context/auth/authContext';
+import ShiftContext from '../../context/shift/shiftContext';
 import { Link } from 'react-router-dom';
 
 const OrganizationItem = ({ organization }) => {
   const organizationContext = useContext(OrganizationContext);
   const authContext = useContext(AuthContext);
+  const shiftContext = useContext(ShiftContext);
+
+  const { clearShifts } = shiftContext;
+
   const {
     deleteOrganization,
     setCurrentOrganization,
@@ -15,14 +20,15 @@ const OrganizationItem = ({ organization }) => {
 
   const { getOrganization } = authContext;
 
-  const { id, name, rate } = organization;
+  const { _id, name, rate } = organization;
 
   const getOrg = () => {
     getOrganization({ name: name });
+    clearShifts();
   };
 
   const onDelete = () => {
-    deleteOrganization(id);
+    deleteOrganization(_id);
     clearCurrentOrganization();
   };
 

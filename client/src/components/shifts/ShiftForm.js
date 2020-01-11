@@ -31,14 +31,13 @@ const ShiftForm = props => {
   }, [shiftContext, current]);
 
   const [shift, setShift] = useState({
-    user: '',
     startDate: '',
     startTime: '',
     endTime: '',
     rest: ''
   });
 
-  const { user, startDate, startTime, endTime, rest } = shift;
+  const { startDate, startTime, endTime, rest } = shift;
 
   const onChange = e =>
     setShift({

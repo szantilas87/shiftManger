@@ -3,6 +3,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import ShiftItem from './ShiftItem';
 import ShiftContext from '../../context/shift/shiftContext';
 import AuthContext from '../../context/auth/authContext';
+import Spinner from '../layout/Spinner';
 
 const Shifts = () => {
   const authContext = useContext(AuthContext);
@@ -22,7 +23,7 @@ const Shifts = () => {
   }
   return (
     <Fragment>
-      <TransitionGroup>
+      {shifts !== null ? (
         <table className='shifts'>
           <thead>
             <tr>
@@ -32,19 +33,14 @@ const Shifts = () => {
               <th> Edit / Delete </th>
             </tr>
           </thead>
+
           {filtered !== null
-            ? filtered.map(shift => (
-                <CSSTransition key={shift._id} timeout={500} classNames='item'>
-                  <ShiftItem shift={shift} />
-                </CSSTransition>
-              ))
-            : shifts.map(shift => (
-                <CSSTransition key={shift._id} timeout={500} classNames='item'>
-                  <ShiftItem shift={shift} />
-                </CSSTransition>
-              ))}
+            ? filtered.map(shift => <ShiftItem key={shift._id} shift={shift} />)
+            : shifts.map(shift => <ShiftItem key={shift._id} shift={shift} />)}
         </table>
-      </TransitionGroup>
+      ) : (
+        <Spinner />
+      )}
     </Fragment>
   );
 };

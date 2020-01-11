@@ -64,13 +64,21 @@ const OrganizationState = props => {
 
   // Delete Organization
 
-  const deleteOrganization = id => {
-    dispatch({
-      type: DELETE_ORGANIZATION,
-      payload: id
-    });
-  };
+  const deleteOrganization = async id => {
+    try {
+      await axios.delete(`/api/organizations/${id}`);
 
+      dispatch({
+        type: DELETE_ORGANIZATION,
+        payload: id
+      });
+    } catch (err) {
+      dispatch({
+        type: ERROR,
+        payload: err.response.msg
+      });
+    }
+  };
   // Clear Organizations
   const clearOrganizations = () => {
     dispatch({

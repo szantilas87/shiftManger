@@ -19,7 +19,7 @@ router.get('/', authOrganization, async (req, res) => {
         const shifts = await Shift.find({
             organization: req.organization.id,
         }).sort({
-            date: -1
+            startDate: -1
         });
         res.json(shifts);
     } catch (err) {

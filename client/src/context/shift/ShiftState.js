@@ -19,7 +19,7 @@ import {
 
 const ShiftState = props => {
   const initialState = {
-    shifts: [],
+    shifts: null,
     current: null,
     filtered: null,
     error: null
@@ -72,13 +72,22 @@ const ShiftState = props => {
   };
 
   // Delete Shift
-  const deleteShift = id => {
-    dispatch({
-      type: DELETE_SHIFT,
-      payload: id
-    });
-  };
 
+  const deleteShift = async id => {
+    try {
+      await axios.delete(`/api/shifts/${id}`);
+
+      dispatch({
+        type: DELETE_SHIFT,
+        payload: id
+      });
+    } catch (err) {
+      dispatch({
+        type: ERROR,
+        payload: err.response.msg
+      });
+    }
+  };
   // Clear Organizations
   const clearShifts = () => {
     dispatch({

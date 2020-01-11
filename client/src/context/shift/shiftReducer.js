@@ -33,13 +33,13 @@ export default (state, action) => {
         case DELETE_SHIFT:
             return {
                 ...state,
-                shifts: state.shifts.filter(shift => shift.id !== action.payload),
+                shifts: state.shifts.filter(shift => shift._id !== action.payload),
                     loading: false
             };
         case CLEAR_SHIFTS:
             return {
                 ...state,
-                shifts: [],
+                shifts: null,
                     filtered: null,
                     error: null,
                     current: null

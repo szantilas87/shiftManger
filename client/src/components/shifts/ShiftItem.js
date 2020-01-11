@@ -6,10 +6,10 @@ const ShiftItem = ({ shift }) => {
   const shiftContext = useContext(ShiftContext);
   const { deleteShift, setCurrentShift, clearCurrentShift } = shiftContext;
 
-  const { id, user, startDate, startTime, endTime, rest } = shift;
+  const { _id, user, startDate, startTime, endTime, rest } = shift;
 
   const onDelete = () => {
-    deleteShift(id);
+    deleteShift(_id);
     clearCurrentShift();
   };
 
