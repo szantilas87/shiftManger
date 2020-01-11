@@ -88,6 +88,37 @@ const ShiftState = props => {
       });
     }
   };
+
+  // Update Shift
+  const updateShift = async shift => {
+    if (localStorage.userToken) {
+      setAuthUserToken(localStorage.userToken);
+    }
+
+    if (localStorage.organizationToken) {
+      setAuthOrgToken(localStorage.organizationToken);
+    }
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    try {
+      const res = await axios.put(`/api/shifts/${shift._id}`, shift, config);
+
+      dispatch({
+        type: UPDATE_SHIFT,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: ERROR,
+        payload: err.response.msg
+      });
+    }
+  };
+
   // Clear Organizations
   const clearShifts = () => {
     dispatch({
@@ -107,15 +138,6 @@ const ShiftState = props => {
   const clearCurrentShift = () => {
     dispatch({
       type: CLEAR_CURRENT_SHIFT
-    });
-  };
-
-  // Update Shift
-
-  const updateShift = shift => {
-    dispatch({
-      type: UPDATE_SHIFT,
-      payload: shift
     });
   };
 

@@ -21,7 +21,6 @@ const ShiftForm = props => {
       setShift(current);
     } else {
       setShift({
-        user: '',
         startDate: '',
         startTime: '',
         endTime: '',

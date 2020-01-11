@@ -68,21 +68,20 @@ router.post('/', [authUser, authOrganization], async (req, res) => {
 // @route   PUT api/shifts/:id
 // @desc    Update shift
 // @access  Private
-router.put('/:id', authUser, authOrganization, async (req, res) => {
+router.put('/:id', async (req, res) => {
     const {
-        name,
         startDate,
         startTime,
         endTime,
+        rest
     } = req.body;
 
 
     // Build contact object
     const shiftFields = {};
-    if (name) shiftFields.name = name;
-    if (startDate) shiftFields.start = startDate;
-    if (startTime) shiftFields.start = startTime;
-    if (endTime) shiftFields.end = endTime;
+    if (startDate) shiftFields.startDate = startDate;
+    if (startTime) shiftFields.startTime = startTime;
+    if (endTime) shiftFields.endTime = endTime;
     if (rest) shiftFields.rest = rest;
 
     try {
@@ -92,12 +91,6 @@ router.put('/:id', authUser, authOrganization, async (req, res) => {
             msg: 'Shift not found'
         });
 
-        // Make sure shift is assigned to the organization 
-        if (shift.organization.toString() !== req.organization.id) {
-            return res.status(401).json({
-                msg: 'Not authorized'
-            })
-        }
 
         shift = await Shift.findByIdAndUpdate(
             req.params.id, {

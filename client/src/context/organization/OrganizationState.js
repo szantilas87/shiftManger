@@ -79,6 +79,33 @@ const OrganizationState = props => {
       });
     }
   };
+
+  // Update Organization
+  const updateOrganization = async organization => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    try {
+      const res = await axios.put(
+        `/api/organizations/${organization._id}`,
+        organization,
+        config
+      );
+
+      dispatch({
+        type: UPDATE_ORGANIZATION,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: ERROR,
+        payload: err.response.msg
+      });
+    }
+  };
   // Clear Organizations
   const clearOrganizations = () => {
     dispatch({
@@ -97,13 +124,6 @@ const OrganizationState = props => {
   const clearCurrentOrganization = () => {
     dispatch({
       type: CLEAR_CURRENT_ORGANIZATION
-    });
-  };
-  // Update Organization
-  const updateOrganization = organization => {
-    dispatch({
-      type: UPDATE_ORGANIZATION,
-      payload: organization
     });
   };
 

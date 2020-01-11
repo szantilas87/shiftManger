@@ -27,7 +27,7 @@ export default (state, action) => {
         case UPDATE_SHIFT:
             return {
                 ...state,
-                shifts: state.shifts.map(shift => shift.id === action.payload.id ? action.payload : shift),
+                shifts: state.shifts.map(shift => shift._id === action.payload._id ? action.payload : shift),
                     loading: false
             };
         case DELETE_SHIFT:
