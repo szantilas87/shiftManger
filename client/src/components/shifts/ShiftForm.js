@@ -3,7 +3,7 @@ import ShiftContext from '../../context/shift/shiftContext';
 import AuthContext from '../../context/auth/authContext';
 import { Link } from 'react-router-dom';
 
-const ShiftForm = props => {
+const ShiftForm = () => {
   const shiftContext = useContext(ShiftContext);
   const authContext = useContext(AuthContext);
 
@@ -61,6 +61,7 @@ const ShiftForm = props => {
   const onLeave = () => {
     leaveOrg();
     clearShifts();
+    localStorage.removeItem('currentOrg');
   };
 
   return (

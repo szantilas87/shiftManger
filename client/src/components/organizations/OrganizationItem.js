@@ -22,9 +22,12 @@ const OrganizationItem = ({ organization }) => {
 
   const { _id, name, rate } = organization;
 
-  const getOrg = () => {
-    getOrganization({ name: name });
+  const onJoin = () => {
+    getOrganization({
+      name: name
+    });
     clearShifts();
+    localStorage.setItem('currentOrg', name);
   };
 
   const onDelete = () => {
@@ -51,10 +54,10 @@ const OrganizationItem = ({ organization }) => {
       <p>
         <Link to='/shifts'>
           {' '}
-          <button className='btn btn-success' onClick={getOrg}>
+          <button className='btn btn-success' onClick={onJoin}>
             {' '}
             Join{' '}
-          </button>
+          </button>{' '}
         </Link>{' '}
         <button
           className='btn btn-dark '
