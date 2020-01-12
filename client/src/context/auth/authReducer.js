@@ -11,7 +11,9 @@ import {
     GET_TOKEN_FAIL,
     ORGANIZATION_LOADED,
     ORGANIZATION_ERROR,
-    LEAVE_ORGANIZATION
+    LEAVE_ORGANIZATION,
+    EDIT_USER,
+    LEAVE_EDIT_USER
 } from '../types';
 
 export default (state, action) => {
@@ -80,7 +82,17 @@ export default (state, action) => {
                 ...state,
                 errors: null
             };
-        default:
-            return state;
+        case EDIT_USER:
+            return {
+                ...state,
+                edit: true
+            };
+        case LEAVE_EDIT_USER:
+            return {
+                ...state,
+                edit: false
+            }
+            default:
+                return state;
     }
 };

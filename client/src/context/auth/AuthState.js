@@ -17,7 +17,9 @@ import {
   GET_ORGANIZATION_TOKEN,
   GET_TOKEN_FAIL,
   ORGANIZATION_LOADED,
-  LEAVE_ORGANIZATION
+  LEAVE_ORGANIZATION,
+  EDIT_USER,
+  LEAVE_EDIT_USER
 } from '../types';
 
 const AuthState = props => {
@@ -28,7 +30,8 @@ const AuthState = props => {
     loading: true,
     user: null,
     error: null,
-    organization: null
+    organization: null,
+    edit: null
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -161,6 +164,17 @@ const AuthState = props => {
       type: CLEAR_ERRORS
     });
 
+  // Edit User
+  const editUser = () =>
+    dispatch({
+      type: EDIT_USER
+    });
+  // Leave Edit User
+  const leaveEditUser = () =>
+    dispatch({
+      type: LEAVE_EDIT_USER
+    });
+
   return (
     <AuthContext.Provider
       value={{
@@ -171,6 +185,7 @@ const AuthState = props => {
         organization: state.organization,
         user: state.user,
         error: state.error,
+        edit: state.edit,
         register,
         loadUser,
         login,
@@ -178,7 +193,9 @@ const AuthState = props => {
         clearErrors,
         getOrganization,
         loadOrganization,
-        leaveOrg
+        leaveOrg,
+        editUser,
+        leaveEditUser
       }}
     >
       {props.children}{' '}

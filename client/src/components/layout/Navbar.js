@@ -10,7 +10,14 @@ const Navbar = ({ title, icon }) => {
   const organizationContext = useContext(OrganizationContext);
   const shiftContext = useContext(ShiftContext);
 
-  const { isAuthenticated, logout, user } = authContext;
+  const {
+    isAuthenticated,
+    logout,
+    user,
+    edit,
+    editUser,
+    leaveEditUser
+  } = authContext;
   const { clearOrganizations } = organizationContext;
   const { clearShifts } = shiftContext;
 
@@ -20,18 +27,38 @@ const Navbar = ({ title, icon }) => {
     clearShifts();
   };
 
+  const onEdit = () => {
+    editUser();
+  };
+
+  const leaveEdit = () => {
+    leaveEditUser();
+  };
+
   const authLinks = (
     <Fragment>
-      <li> Hello {user && user.name} </li>{' '}
-      <li>
-        <a onClick={onLogout} href='#!'>
-          <i className='fas fa-sign-out-alt'> </i>{' '}
-          <span className='hide-sm'> Logout </span>{' '}
-        </a>{' '}
-      </li>{' '}
-      <li>
-        <Link to='/account'> Account </Link>{' '}
-      </li>
+      <ul>
+        <li> Hello {user && user.name} </li>{' '}
+        {!edit ? (
+          <li>
+            <Link to='/account' onClick={onEdit}>
+              Edit Account
+            </Link>
+          </li>
+        ) : (
+          <li>
+            <Link to='/' onClick={leaveEdit}>
+              Home
+            </Link>
+          </li>
+        )}
+        <li>
+          <a onClick={onLogout} href='#!'>
+            <i className='fas fa-sign-out-alt'> </i>{' '}
+            <span className='hide-sm'> Logout </span>{' '}
+          </a>{' '}
+        </li>
+      </ul>
     </Fragment>
   );
 
@@ -47,14 +74,12 @@ const Navbar = ({ title, icon }) => {
   );
   return (
     <div className='navbar bg-primary'>
-      <h1>
-        <i className={icon}> </i> {title}{' '}
-      </h1>{' '}
-      <ul>
-        {' '}
-        {isAuthenticated ? authLinks : guestLinks}
-        {window.location.pathname === '/account' && console.log('ddd')}
-      </ul>{' '}
+      <Link to='/' onClick={leaveEdit}>
+        <h1>
+          <i className={icon}> </i> {title}{' '}
+        </h1>{' '}
+      </Link>
+      <ul> {isAuthenticated ? authLinks : guestLinks}</ul>{' '}
     </div>
   );
 };
