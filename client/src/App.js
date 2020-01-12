@@ -5,6 +5,7 @@ import Alerts from './components/layout/Alerts';
 import Home from './components/pages/Home';
 import About from './components/pages/About';
 import ShiftView from './components/pages/ShiftsView';
+import Account from './components/pages/Account';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import PrivateRoute from './components/routing/PrivateRoute';
@@ -40,6 +41,7 @@ const App = () => {
                     <PrivateRoute exact path='/' component={Home} />{' '}
                     <Route exact path='/about' component={About} />{' '}
                     <PrivateRoute exact path='/shifts' component={ShiftView} />{' '}
+                    <PrivateRoute exact path='/account' component={Account} />{' '}
                     <Route exact path='/register' component={Register} />{' '}
                     <Route exact path='/login' component={Login} />{' '}
                   </Switch>{' '}

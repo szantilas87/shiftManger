@@ -216,11 +216,14 @@ img {
   margin: 0;
 }
 
-.btn-block {
+.btn-block,
+.dis-block {
   display: block;
   width: 100%;
   margin: auto;
 }
+
+
 
 .btn-sm {
   font-size: 0.8rem;

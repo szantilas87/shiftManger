@@ -29,6 +29,9 @@ const Navbar = ({ title, icon }) => {
           <span className='hide-sm'> Logout </span>{' '}
         </a>{' '}
       </li>{' '}
+      <li>
+        <Link to='/account'> Account </Link>{' '}
+      </li>
     </Fragment>
   );
 
@@ -47,7 +50,11 @@ const Navbar = ({ title, icon }) => {
       <h1>
         <i className={icon}> </i> {title}{' '}
       </h1>{' '}
-      <ul> {isAuthenticated ? authLinks : guestLinks} </ul>{' '}
+      <ul>
+        {' '}
+        {isAuthenticated ? authLinks : guestLinks}
+        {window.location.pathname === '/account' && console.log('ddd')}
+      </ul>{' '}
     </div>
   );
 };

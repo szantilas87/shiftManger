@@ -90,4 +90,39 @@ router.post(
     }
 );
 
+// @route   PUT api/users/:id
+// @desc    Update user
+// @access  Private
+router.put('/:id', async (req, res) => {
+    const {
+        organization,
+        email,
+        password
+    } = req.body;
+
+
+    // Build user object
+    const userFields = {};
+    if (organization) userFields.organization = organization;
+    if (email) userFields.email = email;
+    if (password) userFields.password = password;
+
+    try {
+        let user = await User.findById(req.params.id);
+
+
+        user = await User.findByIdAndUpdate(
+            req.params.id, {
+                $set: userFields
+            }, {
+                new: true
+            }
+        );
+        res.json(user);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
 module.exports = router;
