@@ -19,7 +19,10 @@ import {
   ORGANIZATION_LOADED,
   LEAVE_ORGANIZATION,
   EDIT_USER,
-  LEAVE_EDIT_USER
+  LEAVE_EDIT_USER,
+  UPDATE_USER,
+  ERROR,
+  GET_USERS
 } from '../types';
 
 const AuthState = props => {
@@ -28,6 +31,7 @@ const AuthState = props => {
     organizationToken: localStorage.getItem('organizationToken'),
     isAuthenticated: null,
     loading: true,
+    users: null,
     user: null,
     error: null,
     organization: null,
@@ -36,6 +40,21 @@ const AuthState = props => {
 
   const [state, dispatch] = useReducer(authReducer, initialState);
 
+  // Get Users
+  const getUsers = async () => {
+    try {
+      const res = await axios.get('/api/users');
+      dispatch({
+        type: GET_USERS,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: ERROR,
+        payload: err.response.msg
+      });
+    }
+  };
   //   Load User
   const loadUser = async () => {
     if (localStorage.userToken) {
@@ -76,6 +95,29 @@ const AuthState = props => {
       dispatch({
         type: REGISTER_FAIL,
         payload: err.response.data.msg
+      });
+    }
+  };
+
+  // Update User
+  const updateUser = async user => {
+    console.log(user._id);
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    try {
+      const res = await axios.put(`/api/users/${user._id}`, user, config);
+      dispatch({
+        type: UPDATE_USER,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: ERROR,
+        payload: err.response.msg
       });
     }
   };
@@ -184,6 +226,7 @@ const AuthState = props => {
         loading: state.loading,
         organization: state.organization,
         user: state.user,
+        users: state.users,
         error: state.error,
         edit: state.edit,
         register,
@@ -195,9 +238,12 @@ const AuthState = props => {
         loadOrganization,
         leaveOrg,
         editUser,
-        leaveEditUser
+        leaveEditUser,
+        updateUser,
+        getUsers
       }}
     >
+      {' '}
       {props.children}{' '}
     </AuthContext.Provider>
   );

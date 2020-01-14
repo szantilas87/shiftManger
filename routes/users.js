@@ -10,6 +10,19 @@ const {
 
 const User = require('../models/User');
 
+// @route   GET api/users
+// @desc    Get all  users
+// @access  Private
+router.get('/', async (req, res) => {
+    try {
+        const users = await User.find()
+        res.json(users);
+    } catch (error) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
 // @route   POST api/users
 // @desc    Register a user
 // @access  Public
@@ -101,14 +114,21 @@ router.put('/:id', async (req, res) => {
     } = req.body;
 
 
-    // Build user object
-    const userFields = {};
-    if (organization) userFields.organization = organization;
-    if (email) userFields.email = email;
-    if (password) userFields.password = password;
+
+
+
 
     try {
         let user = await User.findById(req.params.id);
+        const salt = await bcrypt.genSalt(10);
+
+        newpassword = await bcrypt.hash(password, salt);
+
+        // Build user object
+        const userFields = {};
+        if (organization) userFields.organization = organization;
+        if (email) userFields.email = email;
+        if (password) userFields.password = newpassword;
 
 
         user = await User.findByIdAndUpdate(
@@ -118,6 +138,9 @@ router.put('/:id', async (req, res) => {
                 new: true
             }
         );
+
+
+
         res.json(user);
     } catch (err) {
         console.error(err.message);

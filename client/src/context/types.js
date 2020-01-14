@@ -33,3 +33,5 @@ export const LEAVE_ORGANIZATION = 'LEAVE_ORGANIZATION';
 export const ERROR = 'ERROR';
 export const EDIT_USER = 'EDIT_USER';
 export const LEAVE_EDIT_USER = 'LEAVE_EDIT_USER';
+export const UPDATE_USER = 'UPDATE_USER';
+export const GET_USERS = 'GET_USERS';

@@ -1,62 +1,63 @@
 import React, { useState, useContext, useEffect, Fragment } from 'react';
 import AlertContext from '../../context/alert/alertContext';
+import Email from './Email';
+import Password from './Password';
 import AuthContext from '../../context/auth/authContext';
 
 const Account = props => {
-  const alertContext = useContext(AlertContext);
-  const authContext = useContext(AuthContext);
+  // const alertContext = useContext(AlertContext);
+  // const authContext = useContext(AuthContext);
 
-  const { setAlert } = alertContext;
-  const { register, error, clearErrors, isAuthenticated } = authContext;
+  // const { setAlert } = alertContext;
+  // const { user, updateUser, leaveEditUser } = authContext;
 
   // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     props.history.push('/');
+  //   if (user !== null) {
+  //     setUser(user);
+  //   } else {
+  //     setUser({
+  //       email: ''
+  //     });
   //   }
+  // }, [authContext, user]);
 
-  //   if (error === 'User already exists') {
-  //     setAlert(error, 'danger');
-  //     clearErrors();
-  //   }
-  //   // eslint-disable-next-line
-  // }, [error, isAuthenticated, props.history]);
+  // const [userChange, setUser] = useState({
+  //   email: ''
+  // });
 
-  const [user, setUser] = useState({
-    name: '',
-    email: '',
-    password: '',
-    password2: ''
-  });
+  // const { email } = userChange;
 
-  const { name, email, password, password2 } = user;
+  // const onChange = e =>
+  //   setUser({
+  //     ...userChange,
+  //     [e.target.name]: e.target.value
+  //   });
 
-  const onChange = e =>
-    setUser({
-      ...user,
-      [e.target.name]: e.target.value
-    });
+  // // const onSubmitPassword = e => {
+  // //   e.preventDefault();
+  // //   if (email === '' || password === '') {
+  // //     setAlert('Please enter all fields', 'danger');
+  // //   } else if (password !== password2) {
+  // //     setAlert('Password do not match', 'danger');
+  // //   } else {
+  // //     updateUser({ user });
+  // //   }
+  // // };
 
-  const onSubmit = e => {
-    e.preventDefault();
-    if (name === '' || email === '' || password === '') {
-      setAlert('Please enter all fields', 'danger');
-    } else if (password !== password2) {
-      setAlert('Password do not match', 'danger');
-    } else {
-      register({
-        name,
-        email,
-        password
-      });
-    }
-  };
+  // const onSubmitEmail = e => {
+  //   e.preventDefault();
+  //   updateUser(userChange);
+  //   leaveEditUser();
+  //   props.history.push('/');
+  // };
+
   return (
     <Fragment>
       <h1 className='text-center'>
         Manage <span className='text-primary'> Account </span>{' '}
       </h1>{' '}
       <div className='grid-3'>
-        <form onSubmit={onSubmit}>
+        {/*<form onSubmit={onSubmitEmail}>
           <div className='form-group'>
             <label htmlFor='email'> Email Address </label>{' '}
             <input
@@ -74,8 +75,8 @@ const Account = props => {
             className='btn btn-primary btn-block'
           />
         </form>{' '}
-        <div></div>
-        <form onSubmit={onSubmit}>
+        <div> </div>{' '}
+        {/* <form onSubmit={onSubmitPassword}>
           <div className='form-group'>
             <label htmlFor='password'> Password </label>{' '}
             <input
@@ -102,7 +103,9 @@ const Account = props => {
             value='Change password'
             className='btn btn-primary btn-block'
           />
-        </form>{' '}
+        </form>*/}
+        <Email props={props} />
+        <Password props={props} />
       </div>
     </Fragment>
   );

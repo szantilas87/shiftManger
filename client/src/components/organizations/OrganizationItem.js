@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import OrganizationContext from '../../context/organization/organizationContext';
 import AuthContext from '../../context/auth/authContext';

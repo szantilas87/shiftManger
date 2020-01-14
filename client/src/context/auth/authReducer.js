@@ -13,11 +13,19 @@ import {
     ORGANIZATION_ERROR,
     LEAVE_ORGANIZATION,
     EDIT_USER,
-    LEAVE_EDIT_USER
+    LEAVE_EDIT_USER,
+    UPDATE_USER,
+    GET_USERS
 } from '../types';
 
 export default (state, action) => {
     switch (action.type) {
+        case GET_USERS:
+            return {
+                ...state,
+                users: action.payload,
+                    loading: false
+            };
         case USER_LOADED:
             return {
                 ...state,
@@ -48,6 +56,12 @@ export default (state, action) => {
                     isAuthenticated: true,
                     loading: false,
                     userToken: action.payload.token
+            };
+        case UPDATE_USER:
+            return {
+                ...state,
+                users: state.users.map(user => user._id === action.payload._id ? action.payload : user),
+                    loading: false
             };
         case REGISTER_FAIL:
         case AUTH_ERROR:
