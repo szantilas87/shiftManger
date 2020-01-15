@@ -35,7 +35,8 @@ const AuthState = props => {
     user: null,
     error: null,
     organization: null,
-    edit: null
+    edit: null,
+    organizationId: null
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -63,7 +64,6 @@ const AuthState = props => {
 
     try {
       const res = await axios.get('/api/auth');
-
       dispatch({
         type: USER_LOADED,
         payload: res.data
@@ -101,7 +101,6 @@ const AuthState = props => {
 
   // Update User
   const updateUser = async user => {
-    console.log(user._id);
     const config = {
       headers: {
         'Content-Type': 'application/json'
@@ -229,6 +228,7 @@ const AuthState = props => {
         users: state.users,
         error: state.error,
         edit: state.edit,
+        organizationId: state.organizationId,
         register,
         loadUser,
         login,

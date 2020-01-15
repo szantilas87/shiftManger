@@ -7,20 +7,13 @@ const Login = props => {
   const authContext = useContext(AuthContext);
 
   const { setAlert } = alertContext;
-  const {
-    login,
-    error,
-    clearErrors,
-    isAuthenticated,
-    organization
-  } = authContext;
+  const { user, login, error, clearErrors, isAuthenticated } = authContext;
 
   useEffect(() => {
-    if (isAuthenticated && organization) {
-      props.history.push('/shifts');
-    } else if (isAuthenticated) {
+    if (isAuthenticated) {
       props.history.push('/');
     }
+
     if (error === 'Invalid Credentials') {
       setAlert(error, 'danger');
       clearErrors();
@@ -28,16 +21,16 @@ const Login = props => {
     // eslint-disable-next-line
   }, [error, isAuthenticated, props.history]);
 
-  const [user, setUser] = useState({
+  const [userLog, setUser] = useState({
     email: '',
     password: ''
   });
 
-  const { email, password } = user;
+  const { email, password } = userLog;
 
   const onChange = e =>
     setUser({
-      ...user,
+      ...userLog,
       [e.target.name]: e.target.value
     });
 

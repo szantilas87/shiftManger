@@ -22,19 +22,22 @@ const Shifts = () => {
   if (shifts !== null && shifts.length === 0 && !loading) {
     return <h4> Please add a shift </h4>;
   }
+
   return (
     <Fragment>
-      <h1>{orgName}</h1>
+      <h1> {orgName} </h1>{' '}
       {shifts !== null ? (
         <table className='shifts'>
           <thead>
+            {' '}
             <tr>
-              <th> Employee name </th> <th> Shift date </th>
+              {' '}
+              <th> Employee name </th> <th> Shift date </th>{' '}
               <th> Start time </th> <th> Finish time </th> <th> Break </th>{' '}
               <th> Worked Hours </th> <th> Shift Cost </th>
               <th> Edit / Delete </th>{' '}
             </tr>{' '}
-          </thead>
+          </thead>{' '}
           {filtered !== null
             ? filtered.map(shift => <ShiftItem key={shift._id} shift={shift} />)
             : shifts.map(shift => (

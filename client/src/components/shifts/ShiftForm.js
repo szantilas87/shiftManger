@@ -1,13 +1,15 @@
 import React, { useState, useContext, useEffect, Fragment } from 'react';
 import ShiftContext from '../../context/shift/shiftContext';
 import AuthContext from '../../context/auth/authContext';
+import OrganizationContext from '../../context/organization/organizationContext';
+
 import { Link } from 'react-router-dom';
 
 const ShiftForm = () => {
   const shiftContext = useContext(ShiftContext);
   const authContext = useContext(AuthContext);
 
-  const { leaveOrg } = authContext;
+  const { user, leaveOrg, updateUser, loadUser } = authContext;
   const {
     addShift,
     clearCurrentShift,
@@ -15,6 +17,11 @@ const ShiftForm = () => {
     current,
     clearShifts
   } = shiftContext;
+
+  // const userChange = {
+  //   _id: user._id,
+  //   organizationId: 'none'
+  // };
 
   useEffect(() => {
     if (current !== null) {
@@ -59,9 +66,11 @@ const ShiftForm = () => {
   };
 
   const onLeave = () => {
+    loadUser();
     leaveOrg();
     clearShifts();
     localStorage.removeItem('currentOrg');
+    // updateUser(userChange);
   };
 
   return (

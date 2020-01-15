@@ -108,27 +108,25 @@ router.post(
 // @access  Private
 router.put('/:id', async (req, res) => {
     const {
-        organization,
+        organizationId,
         email,
         password
     } = req.body;
 
-
-
-
-
-
     try {
         let user = await User.findById(req.params.id);
-        const salt = await bcrypt.genSalt(10);
+        if (req.body.password) {
+            const salt = await bcrypt.genSalt(10);
 
-        newpassword = await bcrypt.hash(password, salt);
+            newPassword = await bcrypt.hash(password, salt);
+        }
+
 
         // Build user object
         const userFields = {};
-        if (organization) userFields.organization = organization;
+        if (organizationId) userFields.organizationId = organizationId;
         if (email) userFields.email = email;
-        if (password) userFields.password = newpassword;
+        if (password) userFields.password = newPassword;
 
 
         user = await User.findByIdAndUpdate(

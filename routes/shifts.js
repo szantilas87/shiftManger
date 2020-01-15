@@ -14,13 +14,23 @@ const Organization = require('../models/Organization');
 // @route   GET api/shifts
 // @desc    Get all shifts
 // @access  Private
-router.get('/', authOrganization, async (req, res) => {
+router.get('/', [authUser, authOrganization], async (req, res) => {
     try {
-        const shifts = await Shift.find({
-            organization: req.organization.id,
-        }).sort({
-            startDate: -1
-        });
+        let shifts;
+        if (req.user.organizationId !== 'none') {
+            shifts = await Shift.find({
+                organization: req.user.organizationId,
+            }).sort({
+                startDate: -1
+            });
+        } else {
+            shifts = await Shift.find({
+                organization: req.organization.id,
+            }).sort({
+                startDate: -1
+            });
+        }
+
         res.json(shifts);
     } catch (err) {
         console.error(err.message);

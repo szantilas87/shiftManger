@@ -14,7 +14,7 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    organization: {
+    organizationId: {
         type: String,
     },
     date: {

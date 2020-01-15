@@ -31,7 +31,8 @@ export default (state, action) => {
                 ...state,
                 isAuthenticated: true,
                     loading: false,
-                    user: action.payload
+                    user: action.payload,
+                    organizationId: action.payload.organizationId
             };
         case ORGANIZATION_LOADED:
             return {
@@ -68,6 +69,7 @@ export default (state, action) => {
         case LOGIN_FAIL:
         case LOGOUT:
             localStorage.removeItem('userToken');
+            localStorage.removeItem('organizationToken');
             return {
                 ...state,
                 userToken: null,
@@ -75,7 +77,9 @@ export default (state, action) => {
                     isAuthenticated: false,
                     loading: false,
                     user: null,
+                    users: null,
                     organization: null,
+                    organizationId: null,
                     error: action.payload
             };
         case GET_ORGANIZATION_TOKEN:

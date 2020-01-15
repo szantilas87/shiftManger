@@ -63,7 +63,8 @@ router.post('/', [check('email', 'Please include a valid email').isEmail(), chec
         const payload = {
             user: {
                 id: user.id,
-                name: user.name
+                name: user.name,
+                organizationId: user.organizationId
             }
         };
 

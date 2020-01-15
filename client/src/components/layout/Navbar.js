@@ -42,23 +42,25 @@ const Navbar = ({ title, icon }) => {
         {!edit ? (
           <li>
             <Link to='/account' onClick={onEdit}>
-              Edit Account
-            </Link>
+              Edit Account{' '}
+            </Link>{' '}
           </li>
         ) : (
           <li>
             <Link to='/' onClick={leaveEdit}>
-              Home
-            </Link>
+              Home{' '}
+            </Link>{' '}
           </li>
-        )}
+        )}{' '}
         <li>
-          <a onClick={onLogout} href='#!'>
-            <i className='fas fa-sign-out-alt'> </i>{' '}
-            <span className='hide-sm'> Logout </span>{' '}
-          </a>{' '}
-        </li>
-      </ul>
+          <Link to='/login'>
+            <a onClick={onLogout} href='#!'>
+              <i className='fas fa-sign-out-alt'> </i>{' '}
+              <span className='hide-sm'> Logout </span>{' '}
+            </a>{' '}
+          </Link>
+        </li>{' '}
+      </ul>{' '}
     </Fragment>
   );
 
@@ -78,8 +80,8 @@ const Navbar = ({ title, icon }) => {
         <h1>
           <i className={icon}> </i> {title}{' '}
         </h1>{' '}
-      </Link>
-      <ul> {isAuthenticated ? authLinks : guestLinks}</ul>{' '}
+      </Link>{' '}
+      <ul> {isAuthenticated ? authLinks : guestLinks} </ul>{' '}
     </div>
   );
 };

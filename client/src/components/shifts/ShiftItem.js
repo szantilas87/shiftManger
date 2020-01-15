@@ -32,7 +32,12 @@ const ShiftItem = ({ shift }) => {
   };
 
   const workedHours = (start, end, rest) => {
-    let totalMinutes = end - start - rest;
+    let totalMinutes;
+    if (start > end) {
+      totalMinutes = start - end - rest;
+    } else {
+      totalMinutes = end - start - rest;
+    }
     let h = Math.floor(totalMinutes / 60);
     let m = totalMinutes % 60;
     h = h < 10 ? '0' + h : h;
@@ -43,7 +48,9 @@ const ShiftItem = ({ shift }) => {
   return (
     <Fragment>
       <tbody>
+        {' '}
         <tr>
+          {' '}
           <td> {user} </td> <td>{startDate}</td> <td> {startTime} </td>{' '}
           <td> {endTime} </td> <td>{restMin}</td>
           <td> {workedHours(startMin, endMin, restMin)} </td>{' '}

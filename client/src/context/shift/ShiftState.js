@@ -119,7 +119,7 @@ const ShiftState = props => {
     }
   };
 
-  // Clear Organizations
+  // Clear Shifts
   const clearShifts = () => {
     dispatch({
       type: CLEAR_SHIFTS

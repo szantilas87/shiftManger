@@ -11,7 +11,9 @@ const Password = ({ props }) => {
 
   useEffect(() => {
     if (user !== null) {
-      setUser(user);
+      setUser({
+        _id: user._id
+      });
     } else {
       setUser({
         password: ''
