@@ -11,23 +11,15 @@ const Shifts = () => {
   const authContext = useContext(AuthContext);
   const shiftContext = useContext(ShiftContext);
 
-  const { getUserToken, loadUser } = authContext;
-  const { shifts, filtered, getShifts, loading } = shiftContext;
+  const { shiftsJoined, filtered, loading } = shiftContext;
 
-  useEffect(() => {
-    loadUser();
-    getShifts();
-
-    // eslint-disable-next-line
-  }, []);
-
-  if (shifts !== null && shifts.length === 0 && !loading) {
+  if (shiftsJoined !== null && shiftsJoined.length === 0 && !loading) {
     return <h4> Please add a shift </h4>;
   }
   return (
     <Fragment>
       <h1> {orgName} </h1>{' '}
-      {shifts !== null ? (
+      {shiftsJoined !== null ? (
         <table className='shifts'>
           <thead>
             {' '}
@@ -41,7 +33,7 @@ const Shifts = () => {
           </thead>{' '}
           {filtered !== null
             ? filtered.map(shift => <ShiftItem key={shift._id} shift={shift} />)
-            : shifts.map(shift => (
+            : shiftsJoined.map(shift => (
                 <ShiftItem key={shift._id} shift={shift} />
               ))}{' '}
         </table>

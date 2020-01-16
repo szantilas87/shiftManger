@@ -1,4 +1,6 @@
-import React, { useReducer } from 'react';
+import React, {
+  useReducer
+} from 'react';
 import axios from 'axios';
 import shiftReducer from './shiftReducer';
 import ShiftContext from './shiftContext';
@@ -6,6 +8,7 @@ import setAuthUserToken from '../../utils/setAuthUserToken';
 import setAuthOrgToken from '../../utils/setAuthOrgToken';
 import {
   GET_SHIFTS,
+  GET_SHIFTS_JOINED,
   ADD_SHIFT,
   DELETE_SHIFT,
   SET_CURRENT_SHIFT,
@@ -20,6 +23,7 @@ import {
 const ShiftState = props => {
   const initialState = {
     shifts: null,
+    shiftsJoined: null,
     current: null,
     filtered: null,
     error: null
@@ -30,8 +34,31 @@ const ShiftState = props => {
   const getShifts = async () => {
     try {
       const res = await axios.get('/api/shifts');
+
       dispatch({
         type: GET_SHIFTS,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: ERROR,
+        payload: err.response.msg
+      });
+    }
+  };
+
+  // Get Shifts After Joined Organization
+  const getShiftsJoined = async organizationId => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    try {
+      const res = await axios.post('/api/shift', organizationId, config);
+      dispatch({
+        type: GET_SHIFTS_JOINED,
         payload: res.data
       });
     } catch (err) {
@@ -156,13 +183,14 @@ const ShiftState = props => {
     });
   };
 
-  return (
-    <ShiftContext.Provider
-      value={{
+  return ( <
+    ShiftContext.Provider value = {
+      {
         shifts: state.shifts,
         current: state.current,
         filtered: state.filtered,
         error: state.error,
+        shiftsJoined: state.shiftsJoined,
         addShift,
         deleteShift,
         setCurrentShift,
@@ -171,12 +199,18 @@ const ShiftState = props => {
         filterShifts,
         clearFilter,
         getShifts,
-        clearShifts
-      }}
-    >
-      {' '}
-      {props.children}{' '}
-    </ShiftContext.Provider>
+        clearShifts,
+        getShiftsJoined
+      }
+    } >
+    {
+      ' '
+    } {
+      props.children
+    } {
+      ' '
+    } <
+    /ShiftContext.Provider>
   );
 };
 

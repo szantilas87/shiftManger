@@ -20,11 +20,11 @@ const Navbar = ({ title, icon }) => {
   } = authContext;
   const { clearOrganizations } = organizationContext;
   const { clearShifts } = shiftContext;
-
   const onLogout = () => {
     logout();
     clearOrganizations();
     clearShifts();
+    localStorage.removeItem('userToken');
   };
 
   const onEdit = () => {
@@ -58,7 +58,7 @@ const Navbar = ({ title, icon }) => {
               <i className='fas fa-sign-out-alt'> </i>{' '}
               <span className='hide-sm'> Logout </span>{' '}
             </a>{' '}
-          </Link>
+          </Link>{' '}
         </li>{' '}
       </ul>{' '}
     </Fragment>

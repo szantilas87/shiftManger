@@ -1,15 +1,25 @@
-import React, { useState, useContext, useEffect, Fragment } from 'react';
+import React, {
+  useState,
+  useContext,
+  useEffect,
+  Fragment
+} from 'react';
 import ShiftContext from '../../context/shift/shiftContext';
 import AuthContext from '../../context/auth/authContext';
-import OrganizationContext from '../../context/organization/organizationContext';
+import {
+  Link
+} from 'react-router-dom';
 
-import { Link } from 'react-router-dom';
-
-const ShiftForm = () => {
+const ShiftForm = props => {
   const shiftContext = useContext(ShiftContext);
   const authContext = useContext(AuthContext);
 
-  const { user, leaveOrg, updateUser, loadUser } = authContext;
+  const {
+    userId,
+    clearOrganizationId,
+    leaveOrg,
+    updateUser,
+  } = authContext;
   const {
     addShift,
     clearCurrentShift,
@@ -18,10 +28,10 @@ const ShiftForm = () => {
     clearShifts
   } = shiftContext;
 
-  // const userChange = {
-  //   _id: user._id,
-  //   organizationId: 'none'
-  // };
+  const userChange = {
+    _id: userId,
+    organizationId: 'none'
+  };
 
   useEffect(() => {
     if (current !== null) {
@@ -43,7 +53,12 @@ const ShiftForm = () => {
     rest: ''
   });
 
-  const { startDate, startTime, endTime, rest } = shift;
+  const {
+    startDate,
+    startTime,
+    endTime,
+    rest
+  } = shift;
 
   const onChange = e =>
     setShift({
@@ -66,74 +81,124 @@ const ShiftForm = () => {
   };
 
   const onLeave = () => {
-    loadUser();
     leaveOrg();
+    localStorage.removeItem('organizationId');
+    localStorage.removeItem('userToken');
+    updateUser(userChange);
     clearShifts();
-    localStorage.removeItem('currentOrg');
-    // updateUser(userChange);
+    clearOrganizationId();
   };
 
-  return (
-    <Fragment>
-      <Link to='/'>
-        <button className='btn btn-danger btn-block' onClick={onLeave}>
-          Leave Organization{' '}
-        </button>{' '}
-      </Link>{' '}
-      <br />
-      <br />
-      <form onSubmit={onSubmit}>
-        <h2 className='text-primary'>
-          {' '}
-          {current ? 'Edit Shift' : 'Add Shift'}{' '}
-        </h2>{' '}
-        Date:{' '}
-        <input
-          type='date'
-          name='startDate'
-          value={startDate}
-          onChange={onChange}
-        />{' '}
-        Start time:{' '}
-        <input
-          type='time'
-          name='startTime'
-          value={startTime}
-          onChange={onChange}
-        />{' '}
-        <br />
-        Finish time:{' '}
-        <input
-          type='time'
-          name='endTime'
-          value={endTime}
-          onChange={onChange}
-        />{' '}
-        <br />
-        Break:{' '}
-        <input
-          type='time'
-          name='rest'
-          placeholder='Break'
-          value={rest}
-          onChange={onChange}
-        />{' '}
-        <div>
-          <input
-            type='submit'
-            value={current ? 'Update Shift' : 'Add Shift'}
-            className='btn btn-primary btn-block'
-          />{' '}
-        </div>{' '}
-        {current && (
-          <div>
-            <button className='btn btn-light btn-block' onClick={clearAll}>
-              Clear{' '}
-            </button>{' '}
-          </div>
-        )}{' '}
-      </form>{' '}
-    </Fragment>
+  return ( <
+    Fragment >
+    <
+    Link to = '/login' >
+    <
+    button className = 'btn btn-danger btn-block'
+    onClick = {
+      onLeave
+    } >
+    Leave Organization {
+      ' '
+    } <
+    /button>{' '} <
+    /Link>{' '} <
+    br / >
+    <
+    br / >
+    <
+    form onSubmit = {
+      onSubmit
+    } >
+    <
+    h2 className = 'text-primary' > {
+      ' '
+    } {
+      current ? 'Edit Shift' : 'Add Shift'
+    } {
+      ' '
+    } <
+    /h2>{' '}
+    Date: {
+      ' '
+    } <
+    input type = 'date'
+    name = 'startDate'
+    value = {
+      startDate
+    }
+    onChange = {
+      onChange
+    }
+    />{' '}
+    Start time: {
+      ' '
+    } <
+    input type = 'time'
+    name = 'startTime'
+    value = {
+      startTime
+    }
+    onChange = {
+      onChange
+    }
+    />{' '} <
+    br / >
+    Finish time: {
+      ' '
+    } <
+    input type = 'time'
+    name = 'endTime'
+    value = {
+      endTime
+    }
+    onChange = {
+      onChange
+    }
+    />{' '} <
+    br / >
+    Break: {
+      ' '
+    } <
+    input type = 'time'
+    name = 'rest'
+    placeholder = 'Break'
+    value = {
+      rest
+    }
+    onChange = {
+      onChange
+    }
+    />{' '} <
+    div >
+    <
+    input type = 'submit'
+    value = {
+      current ? 'Update Shift' : 'Add Shift'
+    }
+    className = 'btn btn-primary btn-block' /
+    > {
+      ' '
+    } <
+    /div>{' '} {
+      current && ( <
+        div >
+        <
+        button className = 'btn btn-light btn-block'
+        onClick = {
+          clearAll
+        } >
+        Clear {
+          ' '
+        } <
+        /button>{' '} <
+        /div>
+      )
+    } {
+      ' '
+    } <
+    /form>{' '} <
+    /Fragment>
   );
 };
 

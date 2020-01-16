@@ -8,29 +8,20 @@ const {
 } = require('express-validator');
 
 const Shift = require('../models/Shift');
-const Organization = require('../models/Organization');
-
 
 // @route   GET api/shifts
 // @desc    Get all shifts
 // @access  Private
-router.get('/', [authUser, authOrganization], async (req, res) => {
-    try {
-        let shifts;
-        if (req.user.organizationId !== 'none') {
-            shifts = await Shift.find({
-                organization: req.user.organizationId,
-            }).sort({
-                startDate: -1
-            });
-        } else {
-            shifts = await Shift.find({
-                organization: req.organization.id,
-            }).sort({
-                startDate: -1
-            });
-        }
+router.get('/', authUser, async (req, res) => {
 
+    try {
+        const shifts = await Shift.find({
+            organization: req.user.organizationId,
+            // organization: req.organization.id
+
+        }).sort({
+            startDate: -1
+        });
         res.json(shifts);
     } catch (err) {
         console.error(err.message);
@@ -64,7 +55,7 @@ router.post('/', [authUser, authOrganization], async (req, res) => {
             rest,
             organization: req.organization.id,
             user: req.user.name,
-            rate: req.organization.rate,
+            rate: req.organization.rate
         });
 
         const shift = await newShift.save();
@@ -86,7 +77,6 @@ router.put('/:id', async (req, res) => {
         rest
     } = req.body;
 
-
     // Build contact object
     const shiftFields = {};
     if (startDate) shiftFields.startDate = startDate;
@@ -97,10 +87,10 @@ router.put('/:id', async (req, res) => {
     try {
         let shift = await Shift.findById(req.params.id);
 
-        if (!shift) return res.status(404).json({
-            msg: 'Shift not found'
-        });
-
+        if (!shift)
+            return res.status(404).json({
+                msg: 'Shift not found'
+            });
 
         shift = await Shift.findByIdAndUpdate(
             req.params.id, {
@@ -123,15 +113,16 @@ router.delete('/:id', authUser, authOrganization, async (req, res) => {
     try {
         let shift = await Shift.findById(req.params.id);
 
-        if (!shift) return res.status(404).json({
-            msg: 'Shift not found'
-        });
+        if (!shift)
+            return res.status(404).json({
+                msg: 'Shift not found'
+            });
 
         // Make sure user owns Shift
         if (shift.organization.toString() !== req.organization.id) {
             return res.status(401).json({
                 msg: 'Not authorized'
-            })
+            });
         }
 
         await Shift.findByIdAndRemove(req.params.id);

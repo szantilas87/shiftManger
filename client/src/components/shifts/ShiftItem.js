@@ -1,12 +1,30 @@
-import React, { useContext, Fragment } from 'react';
+import React, {
+  useContext,
+  Fragment
+} from 'react';
 import PropTypes from 'prop-types';
 import ShiftContext from '../../context/shift/shiftContext';
+import AuthContext from '../../context/auth/authContext';
 
-const ShiftItem = ({ shift }) => {
+const ShiftItem = ({
+  shift
+}) => {
   const shiftContext = useContext(ShiftContext);
-  const { deleteShift, setCurrentShift, clearCurrentShift } = shiftContext;
+  const {
+    deleteShift,
+    setCurrentShift,
+    clearCurrentShift
+  } = shiftContext;
+  const authContext = useContext(AuthContext);
+  const {
+    _id,
+    user,
+    startDate,
+    startTime,
+    endTime,
+    rest
+  } = shift;
 
-  const { _id, user, startDate, startTime, endTime, rest } = shift;
 
   const onDelete = () => {
     deleteShift(_id);
@@ -45,34 +63,58 @@ const ShiftItem = ({ shift }) => {
     return h + ':' + m;
   };
 
-  return (
-    <Fragment>
-      <tbody>
-        {' '}
-        <tr>
-          {' '}
-          <td> {user} </td> <td>{startDate}</td> <td> {startTime} </td>{' '}
-          <td> {endTime} </td> <td>{restMin}</td>
-          <td> {workedHours(startMin, endMin, restMin)} </td>{' '}
-          <td>
-            {' '}
-            {getPaid(startMin, endMin, restMin)}{' '}
-            <i className='fas fa-dollar-sign'> </i>{' '}
-          </td>{' '}
-          <td>
-            <button
-              className='btn btn-dark btn-sm'
-              onClick={() => setCurrentShift(shift)}
-            >
-              Edit{' '}
-            </button>{' '}
-            <button className='btn btn-danger btn-sm' onClick={onDelete}>
-              Delete{' '}
-            </button>{' '}
-          </td>{' '}
-        </tr>{' '}
-      </tbody>{' '}
-    </Fragment>
+  return ( <
+    Fragment >
+    <
+    tbody > {
+      ' '
+    } <
+    tr > {
+      ' '
+    } <
+    td > {
+      user
+    } < /td> <td>{startDate}</td > < td > {
+      startTime
+    } < /td>{' '} <
+    td > {
+      endTime
+    } < /td> <td>{restMin}</td >
+    <
+    td > {
+      workedHours(startMin, endMin, restMin)
+    } < /td>{' '} <
+    td > {
+      ' '
+    } {
+      getPaid(startMin, endMin, restMin)
+    } {
+      ' '
+    } <
+    i className = 'fas fa-dollar-sign' > < /i>{' '} <
+    /td>{' '} <
+    td >
+    <
+    button className = 'btn btn-dark btn-sm'
+    onClick = {
+      () => setCurrentShift(shift)
+    } >
+    Edit {
+      ' '
+    } <
+    /button>{' '} <
+    button className = 'btn btn-danger btn-sm'
+    onClick = {
+      onDelete
+    } >
+    Delete {
+      ' '
+    } <
+    /button>{' '} <
+    /td>{' '} <
+    /tr>{' '} <
+    /tbody>{' '} <
+    /Fragment>
   );
 };
 

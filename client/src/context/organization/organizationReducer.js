@@ -60,7 +60,7 @@
                  ...state,
                  filtered: state.organizations.filter(organization => {
                      const regex = new RegExp(`${action.payload}`, 'gi');
-                     return organization.name.match(regex) || organization.rate.match(regex);
+                     return organization.name.match(regex);
                  })
              };
          case CLEAR_FILTER:

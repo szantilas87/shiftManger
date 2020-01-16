@@ -15,7 +15,8 @@ import {
     EDIT_USER,
     LEAVE_EDIT_USER,
     UPDATE_USER,
-    GET_USERS
+    GET_USERS,
+    CLEAR_ORGANIZATION_ID
 } from '../types';
 
 export default (state, action) => {
@@ -32,7 +33,8 @@ export default (state, action) => {
                 isAuthenticated: true,
                     loading: false,
                     user: action.payload,
-                    organizationId: action.payload.organizationId
+                    organizationId: action.payload.organizationId,
+                    userId: action.payload._id,
             };
         case ORGANIZATION_LOADED:
             return {
@@ -99,6 +101,14 @@ export default (state, action) => {
             return {
                 ...state,
                 errors: null
+            };
+        case CLEAR_ORGANIZATION_ID:
+            return {
+                ...state,
+                organizationId: "none",
+                    user: null,
+                    organizationId: null,
+                    userId: null
             };
         case EDIT_USER:
             return {

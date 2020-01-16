@@ -1,5 +1,6 @@
 import {
     GET_SHIFTS,
+    GET_SHIFTS_JOINED,
     ADD_SHIFT,
     DELETE_SHIFT,
     CLEAR_SHIFTS,
@@ -16,6 +17,12 @@ export default (state, action) => {
             return {
                 ...state,
                 shifts: action.payload,
+                    loading: false
+            };
+        case GET_SHIFTS_JOINED:
+            return {
+                ...state,
+                shiftsJoined: action.payload,
                     loading: false
             };
         case ADD_SHIFT:
@@ -39,9 +46,10 @@ export default (state, action) => {
         case CLEAR_SHIFTS:
             return {
                 ...state,
-                shifts: null,
+                shiftsJoined: null,
                     filtered: null,
                     error: null,
+                    shifts: null,
                     current: null
             };
         case SET_CURRENT_SHIFT:
