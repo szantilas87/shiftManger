@@ -5,11 +5,10 @@ import AuthContext from '../../context/auth/authContext';
 import Spinner from '../layout/Spinner';
 
 const Shifts = () => {
-  const orgName = localStorage.getItem('currentOrg');
-
   const authContext = useContext(AuthContext);
   const shiftContext = useContext(ShiftContext);
 
+  const { organizationName } = authContext;
   const { shiftsJoined, filteredJoined, loading } = shiftContext;
 
   if (shiftsJoined !== null && shiftsJoined.length === 0 && !loading) {
@@ -17,7 +16,7 @@ const Shifts = () => {
   }
   return (
     <Fragment>
-      <h1> {orgName} </h1>{' '}
+      <h1> {organizationName} </h1>{' '}
       {shiftsJoined !== null ? (
         <table className='shifts'>
           {' '}

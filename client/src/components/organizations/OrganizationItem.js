@@ -24,7 +24,8 @@ const OrganizationItem = ({ organization }) => {
 
   const userChange = {
     _id: user._id,
-    organizationId: _id
+    organizationId: _id,
+    organizationName: name
   };
 
   const onJoin = () => {
@@ -34,6 +35,7 @@ const OrganizationItem = ({ organization }) => {
     });
     clearShifts();
     localStorage.setItem('organizationId', _id);
+    localStorage.setItem('organizationName', name);
   };
 
   const onDelete = () => {

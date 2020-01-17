@@ -17,6 +17,9 @@ const UserSchema = mongoose.Schema({
     organizationId: {
         type: String,
     },
+    organizationName: {
+        type: String,
+    },
     date: {
         type: Date,
         default: Date.now

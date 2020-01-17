@@ -7,7 +7,7 @@ const ShiftItem = ({ shift }) => {
   const shiftContext = useContext(ShiftContext);
   const { deleteShift, setCurrentShift, clearCurrentShift } = shiftContext;
   const authContext = useContext(AuthContext);
-  const { _id, user, startDate, startTime, endTime, rest } = shift;
+  const { _id, user, startDate, startTime, endTime, rest, userId } = shift;
 
   const onDelete = () => {
     deleteShift(_id);
@@ -50,28 +50,32 @@ const ShiftItem = ({ shift }) => {
     <Fragment>
       <tbody>
         <tr>
-          <td>{user}</td>
-          <td>{startDate}</td>
-          <td>{startTime}</td>
-          <td>{endTime}</td>
-          <td>{restMin}</td>
-          <td>{workedHours(startMin, endMin, restMin)} </td>{' '}
+          <td> {user} </td> <td> {startDate} </td> <td> {startTime} </td>{' '}
+          <td> {endTime} </td> <td> {restMin} </td>{' '}
+          <td> {workedHours(startMin, endMin, restMin)} </td>{' '}
           <td>
             {' '}
             {getPaid(startMin, endMin, restMin)}{' '}
             <i className='fas fa-dollar-sign'> </i>{' '}
           </td>{' '}
-          <td>
-            <button
-              className='btn btn-dark btn-sm'
-              onClick={() => setCurrentShift(shift)}
-            >
-              Edit{' '}
-            </button>{' '}
-            <button className='btn btn-danger btn-sm' onClick={onDelete}>
-              Delete{' '}
-            </button>{' '}
-          </td>{' '}
+          {userId == authContext.userId ? (
+            <td>
+              {' '}
+              <button
+                className='btn btn-dark btn-sm'
+                onClick={() => setCurrentShift(shift)}
+              >
+                Edit
+              </button>
+              <button className='btn btn-danger btn-sm' onClick={onDelete}>
+                Delete
+              </button>
+            </td>
+          ) : (
+            <td className='text-center'>
+              <i class='fas fa-times'></i>
+            </td>
+          )}
         </tr>{' '}
       </tbody>{' '}
     </Fragment>

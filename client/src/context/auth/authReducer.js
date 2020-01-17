@@ -35,7 +35,8 @@ export default (state, action) => {
                     loading: false,
                     user: action.payload,
                     organizationId: action.payload.organizationId,
-                    userId: action.payload._id
+                    userId: action.payload._id,
+                    organizationName: action.payload.organizationName
             };
         case ORGANIZATION_LOADED:
             return {
@@ -67,7 +68,10 @@ export default (state, action) => {
                 users: state.users.map(user =>
                         user._id === action.payload._id ? action.payload : user
                     ),
-                    loading: false
+                    loading: false,
+                    organizationId: localStorage.getItem('organizationId'),
+                    organizationName: localStorage.getItem('organizationName'),
+
             };
         case REGISTER_FAIL:
         case AUTH_ERROR:
@@ -85,6 +89,7 @@ export default (state, action) => {
                     users: null,
                     organization: null,
                     organizationId: null,
+                    organizationName: null,
                     error: action.payload
             };
         case GET_ORGANIZATION_TOKEN:
@@ -110,6 +115,7 @@ export default (state, action) => {
             return {
                 ...state,
                 organizationId: 'none',
+                    organizationName: null,
             };
         case EDIT_USER:
             return {

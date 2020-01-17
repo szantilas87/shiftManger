@@ -6,12 +6,10 @@ import Spinner from '../layout/Spinner';
 import ShiftForm from './ShiftForm';
 
 const Shifts = () => {
-  const orgName = localStorage.getItem('currentOrg');
-
   const authContext = useContext(AuthContext);
   const shiftContext = useContext(ShiftContext);
 
-  const { getUserToken, loadUser } = authContext;
+  const { organizationName, loadUser } = authContext;
   const { shifts, filtered, getShifts, loading } = shiftContext;
 
   useEffect(() => {
@@ -26,7 +24,7 @@ const Shifts = () => {
   }
   return (
     <Fragment>
-      <h1> {orgName} </h1>{' '}
+      <h1> {organizationName} </h1>{' '}
       {shifts !== null ? (
         <table className='shifts'>
           <thead>

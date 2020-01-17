@@ -109,6 +109,7 @@ router.post(
 router.put('/:id', async (req, res) => {
     const {
         organizationId,
+        organizationName,
         email,
         password
     } = req.body;
@@ -125,6 +126,7 @@ router.put('/:id', async (req, res) => {
         // Build user object
         const userFields = {};
         if (organizationId) userFields.organizationId = organizationId;
+        if (organizationName) userFields.organizationName = organizationName;
         if (email) userFields.email = email;
         if (password) userFields.password = newPassword;
 

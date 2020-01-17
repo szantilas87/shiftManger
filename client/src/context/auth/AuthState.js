@@ -39,6 +39,7 @@ const AuthState = props => {
     organization: null,
     edit: null,
     organizationId: null,
+    organizationName: null,
     userId: null,
     leftOrg: null
   };
@@ -238,6 +239,7 @@ const AuthState = props => {
         error: state.error,
         edit: state.edit,
         organizationId: state.organizationId,
+        organizationName: state.organizationName,
         userId: state.userId,
         register,
         loadUser,

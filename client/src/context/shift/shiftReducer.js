@@ -28,7 +28,7 @@ export default (state, action) => {
             return {
                 ...state,
                 shiftsJoined: action.payload,
-                    loading: false
+                    loading: false,
             };
         case ADD_SHIFT:
             return {
@@ -84,7 +84,8 @@ export default (state, action) => {
         case SET_CURRENT_SHIFT:
             return {
                 ...state,
-                current: action.payload
+                current: action.payload,
+
             };
         case CLEAR_CURRENT_SHIFT:
             return {

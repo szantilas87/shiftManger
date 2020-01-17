@@ -11,7 +11,7 @@ const ShiftItemJoined = ({ shift }) => {
     clearCurrentShift
   } = shiftContext;
   const authContext = useContext(AuthContext);
-  const { _id, user, startDate, startTime, endTime, rest } = shift;
+  const { _id, user, startDate, startTime, endTime, rest, userId } = shift;
 
   const onDelete = () => {
     deleteShiftJoined(_id);
@@ -62,17 +62,24 @@ const ShiftItemJoined = ({ shift }) => {
             {getPaid(startMin, endMin, restMin)}{' '}
             <i className='fas fa-dollar-sign'> </i>{' '}
           </td>{' '}
-          <td>
-            <button
-              className='btn btn-dark btn-sm'
-              onClick={() => setCurrentShift(shift)}
-            >
-              Edit{' '}
-            </button>{' '}
-            <button className='btn btn-danger btn-sm' onClick={onDelete}>
-              Delete{' '}
-            </button>{' '}
-          </td>{' '}
+          {userId == authContext.userId ? (
+            <td>
+              {' '}
+              <button
+                className='btn btn-dark btn-sm'
+                onClick={() => setCurrentShift(shift)}
+              >
+                Edit
+              </button>
+              <button className='btn btn-danger btn-sm' onClick={onDelete}>
+                Delete
+              </button>
+            </td>
+          ) : (
+            <td className='text-center'>
+              <i class='fas fa-times'></i>
+            </td>
+          )}
         </tr>{' '}
       </tbody>{' '}
     </Fragment>
