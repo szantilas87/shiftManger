@@ -1,6 +1,4 @@
-import React, {
-  useReducer
-} from 'react';
+import React, { useReducer } from 'react';
 import axios from 'axios';
 import shiftReducer from './shiftReducer';
 import ShiftContext from './shiftContext';
@@ -10,11 +8,15 @@ import {
   GET_SHIFTS,
   GET_SHIFTS_JOINED,
   ADD_SHIFT,
+  ADD_SHIFT_JOINED,
   DELETE_SHIFT,
+  DELETE_SHIFT_JOINED,
   SET_CURRENT_SHIFT,
   CLEAR_CURRENT_SHIFT,
   UPDATE_SHIFT,
+  UPDATE_SHIFT_JOINED,
   FILTER_SHIFTS,
+  FILTER_SHIFTS_JOINED,
   CLEAR_FILTER,
   CLEAR_SHIFTS,
   ERROR
@@ -26,6 +28,7 @@ const ShiftState = props => {
     shiftsJoined: null,
     current: null,
     filtered: null,
+    filteredJoined: null,
     error: null
   };
 
@@ -98,6 +101,35 @@ const ShiftState = props => {
     }
   };
 
+  // Add Shift Joined
+  const addShiftJoined = async shift => {
+    if (localStorage.userToken) {
+      setAuthUserToken(localStorage.userToken);
+    }
+
+    if (localStorage.organizationToken) {
+      setAuthOrgToken(localStorage.organizationToken);
+    }
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    try {
+      const res = await axios.post('/api/shifts', shift, config);
+      dispatch({
+        type: ADD_SHIFT_JOINED,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: ERROR,
+        payload: err.response.msg
+      });
+    }
+  };
+
   // Delete Shift
 
   const deleteShift = async id => {
@@ -106,6 +138,24 @@ const ShiftState = props => {
 
       dispatch({
         type: DELETE_SHIFT,
+        payload: id
+      });
+    } catch (err) {
+      dispatch({
+        type: ERROR,
+        payload: err.response.msg
+      });
+    }
+  };
+
+  // Delete Shift Joined
+
+  const deleteShiftJoined = async id => {
+    try {
+      await axios.delete(`/api/shifts/${id}`);
+
+      dispatch({
+        type: DELETE_SHIFT_JOINED,
         payload: id
       });
     } catch (err) {
@@ -146,6 +196,35 @@ const ShiftState = props => {
     }
   };
 
+  // Update Shift Joined
+  const updateShiftJoined = async shift => {
+    if (localStorage.userToken) {
+      setAuthUserToken(localStorage.userToken);
+    }
+
+    if (localStorage.organizationToken) {
+      setAuthOrgToken(localStorage.organizationToken);
+    }
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    try {
+      const res = await axios.put(`/api/shifts/${shift._id}`, shift, config);
+
+      dispatch({
+        type: UPDATE_SHIFT_JOINED,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({
+        type: ERROR,
+        payload: err.response.msg
+      });
+    }
+  };
   // Clear Shifts
   const clearShifts = () => {
     dispatch({
@@ -176,6 +255,14 @@ const ShiftState = props => {
     });
   };
 
+  // Filter Shifts joined
+  const filterShiftsJoined = text => {
+    dispatch({
+      type: FILTER_SHIFTS_JOINED,
+      payload: text
+    });
+  };
+
   // Clear Filter
   const clearFilter = () => {
     dispatch({
@@ -183,34 +270,34 @@ const ShiftState = props => {
     });
   };
 
-  return ( <
-    ShiftContext.Provider value = {
-      {
+  return (
+    <ShiftContext.Provider
+      value={{
         shifts: state.shifts,
         current: state.current,
         filtered: state.filtered,
+        filteredJoined: state.filteredJoined,
         error: state.error,
         shiftsJoined: state.shiftsJoined,
         addShift,
+        addShiftJoined,
         deleteShift,
+        deleteShiftJoined,
         setCurrentShift,
         clearCurrentShift,
         updateShift,
+        updateShiftJoined,
         filterShifts,
+        filterShiftsJoined,
         clearFilter,
         getShifts,
         clearShifts,
         getShiftsJoined
-      }
-    } >
-    {
-      ' '
-    } {
-      props.children
-    } {
-      ' '
-    } <
-    /ShiftContext.Provider>
+      }}
+    >
+      {' '}
+      {props.children}{' '}
+    </ShiftContext.Provider>
   );
 };
 

@@ -1,9 +1,8 @@
 import React, { Fragment, useContext, useEffect } from 'react';
-import ShiftItem from './ShiftItem';
+import ShiftItemJoined from './ShiftItemJoined';
 import ShiftContext from '../../context/shift/shiftContext';
 import AuthContext from '../../context/auth/authContext';
 import Spinner from '../layout/Spinner';
-import ShiftForm from './ShiftForm';
 
 const Shifts = () => {
   const orgName = localStorage.getItem('currentOrg');
@@ -11,7 +10,7 @@ const Shifts = () => {
   const authContext = useContext(AuthContext);
   const shiftContext = useContext(ShiftContext);
 
-  const { shiftsJoined, filtered, loading } = shiftContext;
+  const { shiftsJoined, filteredJoined, loading } = shiftContext;
 
   if (shiftsJoined !== null && shiftsJoined.length === 0 && !loading) {
     return <h4> Please add a shift </h4>;
@@ -21,6 +20,7 @@ const Shifts = () => {
       <h1> {orgName} </h1>{' '}
       {shiftsJoined !== null ? (
         <table className='shifts'>
+          {' '}
           <thead>
             {' '}
             <tr>
@@ -31,10 +31,12 @@ const Shifts = () => {
               <th> Edit / Delete </th>{' '}
             </tr>{' '}
           </thead>{' '}
-          {filtered !== null
-            ? filtered.map(shift => <ShiftItem key={shift._id} shift={shift} />)
+          {filteredJoined !== null
+            ? filteredJoined.map(shift => (
+                <ShiftItemJoined key={shift._id} shift={shift} />
+              ))
             : shiftsJoined.map(shift => (
-                <ShiftItem key={shift._id} shift={shift} />
+                <ShiftItemJoined key={shift._id} shift={shift} />
               ))}{' '}
         </table>
       ) : (

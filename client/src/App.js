@@ -40,7 +40,7 @@ const App = () => {
                   <Switch>
                     <PrivateRoute exact path='/' component={Home} />{' '}
                     <Route exact path='/about' component={About} />{' '}
-                    <Route exact path='/shifts' component={ShiftView} />{' '}
+                    <PrivateRoute exact path='/shifts' component={ShiftView} />{' '}
                     <PrivateRoute exact path='/account' component={Account} />{' '}
                     <Route exact path='/register' component={Register} />{' '}
                     <Route exact path='/login' component={Login} />{' '}

@@ -3,14 +3,18 @@ import PropTypes from 'prop-types';
 import ShiftContext from '../../context/shift/shiftContext';
 import AuthContext from '../../context/auth/authContext';
 
-const ShiftItem = ({ shift }) => {
+const ShiftItemJoined = ({ shift }) => {
   const shiftContext = useContext(ShiftContext);
-  const { deleteShift, setCurrentShift, clearCurrentShift } = shiftContext;
+  const {
+    deleteShiftJoined,
+    setCurrentShift,
+    clearCurrentShift
+  } = shiftContext;
   const authContext = useContext(AuthContext);
   const { _id, user, startDate, startTime, endTime, rest } = shift;
 
   const onDelete = () => {
-    deleteShift(_id);
+    deleteShiftJoined(_id);
     clearCurrentShift();
   };
 
@@ -50,12 +54,9 @@ const ShiftItem = ({ shift }) => {
     <Fragment>
       <tbody>
         <tr>
-          <td>{user}</td>
-          <td>{startDate}</td>
-          <td>{startTime}</td>
-          <td>{endTime}</td>
-          <td>{restMin}</td>
-          <td>{workedHours(startMin, endMin, restMin)} </td>{' '}
+          <td> {user} </td> <td> {startDate} </td> <td> {startTime} </td>{' '}
+          <td> {endTime} </td> <td> {restMin} </td>{' '}
+          <td> {workedHours(startMin, endMin, restMin)} </td>{' '}
           <td>
             {' '}
             {getPaid(startMin, endMin, restMin)}{' '}
@@ -78,8 +79,8 @@ const ShiftItem = ({ shift }) => {
   );
 };
 
-ShiftItem.propTypes = {
+ShiftItemJoined.propTypes = {
   shift: PropTypes.object.isRequired
 };
 
-export default ShiftItem;
+export default ShiftItemJoined;

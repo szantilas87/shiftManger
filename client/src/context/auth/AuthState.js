@@ -23,7 +23,8 @@ import {
   LEAVE_EDIT_USER,
   UPDATE_USER,
   ERROR,
-  GET_USERS
+  GET_USERS,
+  JOIN_ORGANIZATION
 } from '../types';
 
 const AuthState = props => {
@@ -38,7 +39,8 @@ const AuthState = props => {
     organization: null,
     edit: null,
     organizationId: null,
-    userId: null
+    userId: null,
+    leftOrg: null
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);

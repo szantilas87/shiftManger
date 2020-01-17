@@ -3,15 +3,15 @@ import ShiftContext from '../../context/shift/shiftContext';
 import AuthContext from '../../context/auth/authContext';
 import { Link } from 'react-router-dom';
 
-const ShiftForm = props => {
+const ShiftFormJoined = props => {
   const shiftContext = useContext(ShiftContext);
   const authContext = useContext(AuthContext);
 
   const { userId, clearOrganizationId, leaveOrg, updateUser } = authContext;
   const {
-    addShift,
+    addShiftJoined,
     clearCurrentShift,
-    updateShift,
+    updateShiftJoined,
     current,
     clearShifts
   } = shiftContext;
@@ -52,9 +52,9 @@ const ShiftForm = props => {
   const onSubmit = e => {
     e.preventDefault();
     if (current === null) {
-      addShift(shift);
+      addShiftJoined(shift);
     } else {
-      updateShift(shift);
+      updateShiftJoined(shift);
     }
     clearAll();
   };
@@ -136,4 +136,4 @@ const ShiftForm = props => {
   );
 };
 
-export default ShiftForm;
+export default ShiftFormJoined;

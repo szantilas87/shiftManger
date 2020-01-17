@@ -16,7 +16,8 @@ import {
     LEAVE_EDIT_USER,
     UPDATE_USER,
     GET_USERS,
-    CLEAR_ORGANIZATION_ID
+    CLEAR_ORGANIZATION_ID,
+    JOIN_ORGANIZATION
 } from '../types';
 
 export default (state, action) => {
@@ -34,7 +35,7 @@ export default (state, action) => {
                     loading: false,
                     user: action.payload,
                     organizationId: action.payload.organizationId,
-                    userId: action.payload._id,
+                    userId: action.payload._id
             };
         case ORGANIZATION_LOADED:
             return {
@@ -63,7 +64,9 @@ export default (state, action) => {
         case UPDATE_USER:
             return {
                 ...state,
-                users: state.users.map(user => user._id === action.payload._id ? action.payload : user),
+                users: state.users.map(user =>
+                        user._id === action.payload._id ? action.payload : user
+                    ),
                     loading: false
             };
         case REGISTER_FAIL:
@@ -102,13 +105,11 @@ export default (state, action) => {
                 ...state,
                 errors: null
             };
+
         case CLEAR_ORGANIZATION_ID:
             return {
                 ...state,
-                organizationId: "none",
-                    user: null,
-                    organizationId: null,
-                    userId: null
+                organizationId: 'none',
             };
         case EDIT_USER:
             return {
@@ -119,8 +120,8 @@ export default (state, action) => {
             return {
                 ...state,
                 edit: false
-            }
-            default:
-                return state;
+            };
+        default:
+            return state;
     }
 };
