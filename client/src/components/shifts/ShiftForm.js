@@ -12,6 +12,7 @@ const ShiftForm = props => {
     addShift,
     clearCurrentShift,
     updateShift,
+    deleteShiftLeave,
     current,
     clearShifts
   } = shiftContext;
@@ -19,6 +20,10 @@ const ShiftForm = props => {
   const userChange = {
     _id: userId,
     organizationId: 'none'
+  };
+
+  const deleteShifts = {
+    userId: userId
   };
 
   useEffect(() => {
@@ -70,6 +75,7 @@ const ShiftForm = props => {
     updateUser(userChange);
     clearShifts();
     clearOrganizationId();
+    deleteShiftLeave(deleteShifts);
   };
 
   return (

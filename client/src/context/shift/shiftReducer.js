@@ -5,6 +5,7 @@ import {
     ADD_SHIFT_JOINED,
     DELETE_SHIFT,
     DELETE_SHIFT_JOINED,
+    DELETE_SHIFT_LEAVE,
     CLEAR_SHIFTS,
     SET_CURRENT_SHIFT,
     CLEAR_CURRENT_SHIFT,
@@ -58,6 +59,12 @@ export default (state, action) => {
                 ...state,
                 shifts: state.shifts.filter(shift => shift._id !== action.payload),
                     loading: false
+            };
+        case DELETE_SHIFT_LEAVE:
+            return {
+                ...state,
+                shiftsJoined: null,
+                    shift: null
             };
         case DELETE_SHIFT_JOINED:
             return {

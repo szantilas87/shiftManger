@@ -5,6 +5,10 @@ const ShiftSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'organization'
     },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'
+    },
     user: {
         type: String,
         required: true,

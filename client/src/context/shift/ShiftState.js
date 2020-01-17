@@ -11,6 +11,7 @@ import {
   ADD_SHIFT_JOINED,
   DELETE_SHIFT,
   DELETE_SHIFT_JOINED,
+  DELETE_SHIFT_LEAVE,
   SET_CURRENT_SHIFT,
   CLEAR_CURRENT_SHIFT,
   UPDATE_SHIFT,
@@ -139,6 +140,28 @@ const ShiftState = props => {
       dispatch({
         type: DELETE_SHIFT,
         payload: id
+      });
+    } catch (err) {
+      dispatch({
+        type: ERROR,
+        payload: err.response.msg
+      });
+    }
+  };
+
+  // Delete Shift After Leave Organization
+
+  const deleteShiftLeave = async userId => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    try {
+      await axios.post(`/api/shift/delete`, userId, config);
+
+      dispatch({
+        type: DELETE_SHIFT_LEAVE
       });
     } catch (err) {
       dispatch({
@@ -283,6 +306,7 @@ const ShiftState = props => {
         addShiftJoined,
         deleteShift,
         deleteShiftJoined,
+        deleteShiftLeave,
         setCurrentShift,
         clearCurrentShift,
         updateShift,

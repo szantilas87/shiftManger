@@ -8,8 +8,13 @@ const Account = props => {
       <h1 className='text-center'>
         Manage <span className='text-primary'> Account </span>{' '}
       </h1>{' '}
-      <div className='grid-3'>
-        <Email props={props} /> <Password props={props} />{' '}
+      <div className='grid-2'>
+        <div>
+          <Email props={props} />{' '}
+        </div>{' '}
+        <div>
+          <Password props={props} />{' '}
+        </div>{' '}
       </div>{' '}
     </Fragment>
   );

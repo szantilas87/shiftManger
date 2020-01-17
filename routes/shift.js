@@ -11,7 +11,7 @@ const {
 const Shift = require('../models/Shift');
 
 // @route   GET api/shift
-// @desc    Get shifts for user 
+// @desc    Get shifts for user who joined org.
 // @access  Public
 
 router.post('/', async (req, res) => {
@@ -31,5 +31,22 @@ router.post('/', async (req, res) => {
     }
 });
 
+// @route   DELETE api/shift
+// @desc    Delete all shifts for user
+// @access  Private
+router.post('/delete', async (req, res) => {
+    try {
+        await Shift.deleteMany({
+            userId: req.body.userId
+        });
+
+        res.json({
+            msg: 'Shifts removed'
+        });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
 
 module.exports = router;

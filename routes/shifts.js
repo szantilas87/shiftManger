@@ -55,6 +55,7 @@ router.post('/', [authUser, authOrganization], async (req, res) => {
             rest,
             organization: req.organization.id,
             user: req.user.name,
+            userId: req.user.id,
             rate: req.organization.rate
         });
 
