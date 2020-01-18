@@ -16,9 +16,13 @@ const UserSchema = mongoose.Schema({
     },
     organizationId: {
         type: String,
+        default: "none"
     },
     organizationName: {
         type: String,
+    },
+    organizationRate: {
+        type: Number,
     },
     date: {
         type: Date,

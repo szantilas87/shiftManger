@@ -3,7 +3,6 @@ import ShiftItem from './ShiftItem';
 import ShiftContext from '../../context/shift/shiftContext';
 import AuthContext from '../../context/auth/authContext';
 import Spinner from '../layout/Spinner';
-import ShiftForm from './ShiftForm';
 
 const Shifts = () => {
   const authContext = useContext(AuthContext);

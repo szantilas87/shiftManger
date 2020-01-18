@@ -78,7 +78,7 @@ router.put('/:id', async (req, res) => {
         rest
     } = req.body;
 
-    // Build contact object
+    // Build shift object
     const shiftFields = {};
     if (startDate) shiftFields.startDate = startDate;
     if (startTime) shiftFields.startTime = startTime;

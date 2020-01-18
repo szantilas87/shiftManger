@@ -80,15 +80,15 @@ router.post(
 
             const payload = {
                 user: {
-                    id: user.id
+                    id: user.id,
+                    name: user.name,
+                    organizationId: user.organizationId
                 }
             };
 
             jwt.sign(
                 payload,
-                config.get('jwtSecret'), {
-                    expiresIn: 36000
-                },
+                config.get('jwtSecret'),
                 (err, token) => {
                     if (err) throw err;
                     res.json({
@@ -110,6 +110,7 @@ router.put('/:id', async (req, res) => {
     const {
         organizationId,
         organizationName,
+        organizationRate,
         email,
         password
     } = req.body;
@@ -127,6 +128,7 @@ router.put('/:id', async (req, res) => {
         const userFields = {};
         if (organizationId) userFields.organizationId = organizationId;
         if (organizationName) userFields.organizationName = organizationName;
+        if (organizationRate) userFields.organizationRate = organizationRate;
         if (email) userFields.email = email;
         if (password) userFields.password = newPassword;
 

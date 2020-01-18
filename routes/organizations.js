@@ -107,7 +107,7 @@ router.delete('/:id', async (req, res) => {
 
     if (!organization)
       return res.status(404).json({
-        msg: 'Contact not found'
+        msg: 'Organization not found'
       });
 
     await Organization.findByIdAndRemove(req.params.id);

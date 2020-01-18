@@ -1,4 +1,6 @@
-import React, { useReducer } from 'react';
+import React, {
+  useReducer
+} from 'react';
 import axios from 'axios';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
@@ -24,7 +26,6 @@ import {
   UPDATE_USER,
   ERROR,
   GET_USERS,
-  JOIN_ORGANIZATION
 } from '../types';
 
 const AuthState = props => {
@@ -40,6 +41,7 @@ const AuthState = props => {
     edit: null,
     organizationId: null,
     organizationName: null,
+    organizationRate: null,
     userId: null,
     leftOrg: null
   };
@@ -226,9 +228,9 @@ const AuthState = props => {
       type: LEAVE_EDIT_USER
     });
 
-  return (
-    <AuthContext.Provider
-      value={{
+  return ( <
+    AuthContext.Provider value = {
+      {
         userToken: state.userToken,
         organizationToken: state.organizationToken,
         isAuthenticated: state.isAuthenticated,
@@ -240,6 +242,7 @@ const AuthState = props => {
         edit: state.edit,
         organizationId: state.organizationId,
         organizationName: state.organizationName,
+        organizationRate: state.organizationRate,
         userId: state.userId,
         register,
         loadUser,
@@ -254,11 +257,15 @@ const AuthState = props => {
         updateUser,
         getUsers,
         clearOrganizationId
-      }}
-    >
-      {' '}
-      {props.children}{' '}
-    </AuthContext.Provider>
+      }
+    } > {
+      ' '
+    } {
+      props.children
+    } {
+      ' '
+    } <
+    /AuthContext.Provider>
   );
 };
 

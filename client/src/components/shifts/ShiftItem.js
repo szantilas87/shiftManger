@@ -5,9 +5,13 @@ import AuthContext from '../../context/auth/authContext';
 
 const ShiftItem = ({ shift }) => {
   const shiftContext = useContext(ShiftContext);
-  const { deleteShift, setCurrentShift, clearCurrentShift } = shiftContext;
   const authContext = useContext(AuthContext);
+
+  const { deleteShift, setCurrentShift, clearCurrentShift } = shiftContext;
+
   const { _id, user, startDate, startTime, endTime, rest, userId } = shift;
+
+  const { organizationRate } = authContext;
 
   const onDelete = () => {
     deleteShift(_id);
@@ -25,9 +29,13 @@ const ShiftItem = ({ shift }) => {
   let endMin = getMinutes(endTime);
   let restMin = getMinutes(rest);
 
-  const getPaid = (start, end, rest) => {
-    const rate = 10;
-    let pay = (end - start - rest) * (rate / 60);
+  const getPaid = (start, end, rest, rate) => {
+    let pay;
+    if (start > end) {
+      pay = (1440 - start + end - rest) * (rate / 60);
+    } else {
+      pay = (end - start - rest) * (rate / 60);
+    }
 
     return Math.round(pay);
   };
@@ -35,7 +43,7 @@ const ShiftItem = ({ shift }) => {
   const workedHours = (start, end, rest) => {
     let totalMinutes;
     if (start > end) {
-      totalMinutes = start - end - rest;
+      totalMinutes = 1440 - start + end - rest;
     } else {
       totalMinutes = end - start - rest;
     }
@@ -55,27 +63,27 @@ const ShiftItem = ({ shift }) => {
           <td> {workedHours(startMin, endMin, restMin)} </td>{' '}
           <td>
             {' '}
-            {getPaid(startMin, endMin, restMin)}{' '}
+            {getPaid(startMin, endMin, restMin, organizationRate)}{' '}
             <i className='fas fa-dollar-sign'> </i>{' '}
           </td>{' '}
-          {userId == authContext.userId ? (
+          {userId === authContext.userId ? (
             <td>
               {' '}
               <button
                 className='btn btn-dark btn-sm'
                 onClick={() => setCurrentShift(shift)}
               >
-                Edit
-              </button>
+                Edit{' '}
+              </button>{' '}
               <button className='btn btn-danger btn-sm' onClick={onDelete}>
-                Delete
-              </button>
+                Delete{' '}
+              </button>{' '}
             </td>
           ) : (
             <td className='text-center'>
-              <i class='fas fa-times'></i>
+              <i className='fas fa-times'> </i>{' '}
             </td>
-          )}
+          )}{' '}
         </tr>{' '}
       </tbody>{' '}
     </Fragment>

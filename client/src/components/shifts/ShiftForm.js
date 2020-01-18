@@ -98,6 +98,7 @@ const ShiftForm = props => {
           name='startDate'
           value={startDate}
           onChange={onChange}
+          required
         />{' '}
         Start time:{' '}
         <input
@@ -105,6 +106,7 @@ const ShiftForm = props => {
           name='startTime'
           value={startTime}
           onChange={onChange}
+          required
         />{' '}
         <br />
         Finish time:{' '}
@@ -113,6 +115,7 @@ const ShiftForm = props => {
           name='endTime'
           value={endTime}
           onChange={onChange}
+          required
         />{' '}
         <br />
         Break:{' '}
@@ -122,6 +125,7 @@ const ShiftForm = props => {
           placeholder='Break'
           value={rest}
           onChange={onChange}
+          required
         />{' '}
         <div>
           <input

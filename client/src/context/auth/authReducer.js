@@ -17,7 +17,6 @@ import {
     UPDATE_USER,
     GET_USERS,
     CLEAR_ORGANIZATION_ID,
-    JOIN_ORGANIZATION
 } from '../types';
 
 export default (state, action) => {
@@ -36,7 +35,9 @@ export default (state, action) => {
                     user: action.payload,
                     organizationId: action.payload.organizationId,
                     userId: action.payload._id,
-                    organizationName: action.payload.organizationName
+                    organizationName: action.payload.organizationName,
+                    organizationRate: action.payload.organizationRate,
+
             };
         case ORGANIZATION_LOADED:
             return {
@@ -71,6 +72,8 @@ export default (state, action) => {
                     loading: false,
                     organizationId: localStorage.getItem('organizationId'),
                     organizationName: localStorage.getItem('organizationName'),
+                    organizationRate: localStorage.getItem('organizationRate'),
+
 
             };
         case REGISTER_FAIL:
@@ -90,6 +93,7 @@ export default (state, action) => {
                     organization: null,
                     organizationId: null,
                     organizationName: null,
+                    organizationRate: null,
                     error: action.payload
             };
         case GET_ORGANIZATION_TOKEN:
@@ -116,6 +120,7 @@ export default (state, action) => {
                 ...state,
                 organizationId: 'none',
                     organizationName: null,
+                    organizationRate: null,
             };
         case EDIT_USER:
             return {

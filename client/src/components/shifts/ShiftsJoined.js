@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect } from 'react';
+import React, { Fragment, useContext } from 'react';
 import ShiftItemJoined from './ShiftItemJoined';
 import ShiftContext from '../../context/shift/shiftContext';
 import AuthContext from '../../context/auth/authContext';

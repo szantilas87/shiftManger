@@ -25,6 +25,9 @@ const Navbar = ({ title, icon }) => {
     clearOrganizations();
     clearShifts();
     localStorage.removeItem('userToken');
+    localStorage.removeItem('organizationId');
+    localStorage.removeItem('organizationName');
+    localStorage.removeItem('organizationRate');
   };
 
   const onEdit = () => {
@@ -53,12 +56,10 @@ const Navbar = ({ title, icon }) => {
           </li>
         )}{' '}
         <li>
-          <Link to='/login'>
-            <a onClick={onLogout} href='#!'>
-              <i className='fas fa-sign-out-alt'> </i>{' '}
-              <span className='hide-sm'> Logout </span>{' '}
-            </a>{' '}
-          </Link>{' '}
+          <a onClick={onLogout} href='#!'>
+            <i className='fas fa-sign-out-alt'> </i>{' '}
+            <span className='hide-sm'> Logout </span>{' '}
+          </a>{' '}
         </li>{' '}
       </ul>{' '}
     </Fragment>
@@ -92,7 +93,7 @@ Navbar.prototype = {
 };
 
 Navbar.defaultProps = {
-  title: 'Contact Keeper',
+  title: 'Shift manager',
   icon: 'fas fa-id-card-alt'
 };
 

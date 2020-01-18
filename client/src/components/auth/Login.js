@@ -14,7 +14,6 @@ const Login = props => {
     setAlert
   } = alertContext;
   const {
-    user,
     login,
     error,
     clearErrors,
@@ -64,8 +63,10 @@ const Login = props => {
     div className = 'form-container' >
     <
     h1 >
-    Account < span className = 'text-primary' > Login < /span>{' '} <
-    /h1>{' '} <
+    Account < span className = 'text-primary' > Login < /span>{' '} < /
+    h1 > {
+      ' '
+    } <
     form onSubmit = {
       onSubmit
     } >
@@ -105,8 +106,8 @@ const Login = props => {
     className = 'btn btn-primary btn-block' /
     >
     <
-    /form>{' '} <
-    /div>
+    /form>{' '} < /
+    div >
   );
 };
 

@@ -37,7 +37,6 @@ router.post('/', [check('email', 'Please include a valid email').isEmail(), chec
             errors: errors.array()
         });
     }
-
     const {
         email,
         password

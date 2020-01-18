@@ -1,4 +1,8 @@
-import React, { useContext, useEffect, Fragment } from 'react';
+import React, {
+  useContext,
+  useEffect,
+  Fragment
+} from 'react';
 import ShiftsJoined from '../shifts/ShiftsJoined';
 import ShiftFilterJoined from '../shifts/ShiftFilterJoined';
 import ShiftFormJoined from '../shifts/ShiftFormJoined';
@@ -10,14 +14,12 @@ const ShiftsView = () => {
   const shiftContext = useContext(ShiftContext);
 
   const {
-    shifts,
-    filtered,
-    getShifts,
-    loading,
     getShiftsJoined
   } = shiftContext;
 
-  const { loadOrganization } = authContext;
+  const {
+    loadOrganization
+  } = authContext;
   const organizationId = localStorage.getItem('organizationId');
 
   useEffect(() => {
@@ -28,24 +30,37 @@ const ShiftsView = () => {
     // eslint-disable-next-line
   }, []);
 
-  return (
-    <Fragment>
-      <div>
-        <br />
-        <br />
-        <div>
-          <ShiftFilterJoined />
-          <ShiftsJoined />
-        </div>{' '}
-        <br />
-        <br />
-        <div className='shift-form'>
-          <ShiftFormJoined />
-        </div>{' '}
-        <br />
-        <br />
-      </div>{' '}
-    </Fragment>
+  return ( <
+    Fragment >
+    <
+    div >
+    <
+    br / >
+    <
+    br / >
+    <
+    div >
+    <
+    ShiftFilterJoined / >
+    <
+    ShiftsJoined / >
+    <
+    /div>{' '} <
+    br / >
+    <
+    br / >
+    <
+    div className = 'shift-form' >
+    <
+    ShiftFormJoined / >
+    <
+    /div>{' '} <
+    br / >
+    <
+    br / >
+    <
+    /div>{' '} <
+    /Fragment>
   );
 };
 
