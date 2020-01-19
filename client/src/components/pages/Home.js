@@ -1,8 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  Fragment
-} from 'react';
+import React, { useContext, useEffect, Fragment } from 'react';
 import Organizations from '../organizations/Organizations';
 import OrganizationForm from '../organizations/OrganizationForm';
 import OrganizationFilter from '../organizations/OrganizationFilter';
@@ -14,67 +10,42 @@ import AuthContext from '../../context/auth/authContext';
 const Home = () => {
   const authContext = useContext(AuthContext);
 
-  const {
-    getUsers,
-    organizationId
-  } = authContext;
+  const { getUsers, organizationId } = authContext;
   useEffect(() => {
     getUsers();
     // eslint-disable-next-line
   }, []);
-  return ( <
-    Fragment > {
-      ' '
-    } {
-      organizationId !== 'none' ? ( <
-        div >
-        <
-        br / >
-        <
-        br / >
-        <
-        div >
-        <
-        ShiftFilter / >
-        <
-        Shifts / >
-        <
-        /div>{' '} <
-        br / >
-        <
-        br / >
-        <
-        div className = 'shift-form' >
-        <
-        ShiftForm / >
-        <
-        /div>{' '} <
-        br / >
-        <
-        br / >
-        <
-        /div>
-      ) : ( <
-        div className = 'grid-2' >
-        <
-        div >
-        <
-        OrganizationForm / >
-        <
-        /div>{' '} <
-        div >
-        <
-        OrganizationFilter / >
-        <
-        Organizations / >
-        <
-        /div>{' '} <
-        /div>
-      )
-    } {
-      ' '
-    } <
-    /Fragment>
+  return (
+    <Fragment>
+      {' '}
+      {organizationId !== 'none' ? (
+        <div>
+          <br />
+          <br />
+          <div>
+            <ShiftFilter />
+            <Shifts />
+          </div>{' '}
+          <br />
+          <br />
+          <div className='shift-form'>
+            <ShiftForm />
+          </div>{' '}
+          <br />
+          <br />
+        </div>
+      ) : (
+        <div className='grid-2'>
+          <div>
+            <OrganizationForm />
+          </div>{' '}
+          <div>
+            <OrganizationFilter />
+            <Organizations />
+          </div>{' '}
+        </div>
+      )}{' '}
+    </Fragment>
   );
 };
 

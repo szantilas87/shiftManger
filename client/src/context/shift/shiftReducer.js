@@ -33,13 +33,13 @@ export default (state, action) => {
         case ADD_SHIFT:
             return {
                 ...state,
-                shifts: [...state.shifts, action.payload],
+                shifts: [action.payload, ...state.shifts],
                     loading: false
             };
         case ADD_SHIFT_JOINED:
             return {
                 ...state,
-                shiftsJoined: [...state.shiftsJoined, action.payload],
+                shiftsJoined: [action.payload, ...state.shiftsJoined],
                     loading: false
             };
         case UPDATE_SHIFT:
